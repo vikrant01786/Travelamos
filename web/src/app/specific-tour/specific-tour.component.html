@@ -1,0 +1,162 @@
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<app-header></app-header>
+<!-----------=========================baneer-start-=======================================-->
+<section class="specific-banner-bg" [style.background-image]="'url(' + (img) + ')'">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 class="bottom-left">{{TourTitle}}</h3>
+    </div>
+  </div>
+</div>
+</section>
+<!-----------=========================baneer-end-=======================================-->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <p class="country_name">{{CountryName}}</p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <!-- <h2 class="h2_clr pt-4"><i class="fa fa-map-marker pr-3" ></i>{{'Specific_tours.ITINERARY' | translate}}</h2><hr> -->
+
+<!-- pills starts -->
+<ul class="nav nav-pills" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="pill" href="#Days"><h2 class=" pt-4 myLink"><b><i class="fa fa-map-marker pr-3" ></i>{{'Specific_tours.ITINERARY' | translate}}</b></h2></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="pill" href="#Price"><h2 class=" pt-4 myLink"><b><i class="fa fa-money  pr-3" aria-hidden="true" ></i>PRICE</b></h2></a>
+  </li>
+</ul><hr>
+<!-- pills ends -->
+    </div>
+  </div>
+
+  <div class="tab-content" >
+    <div id="Days" class="container tab-pane active"><br>
+      <div  class="row">
+        <div class="col-lg-12">
+          <h1 class="prgrm_title pt-3 pb-3">{{ProgramTitle}}</h1>
+        </div>
+      </div>
+      <div *ngIf="message" class="row ">
+        <div class="col-lg-md-12">
+          <div class="alert alert-danger">
+            <strong>{{message}}</strong>
+          </div>
+        </div>
+      </div>
+      <div *ngFor=" let Days of DaysData" class="row" >
+        <div class="card w-100 mb-2">
+                <div class="row">
+                  <div class="col-md-2">
+                    <h3 class="h3_cls">{{'Specific_tours.Day' | translate}}</h3>
+                    <h1  class="h1_cls">{{Days.Days}}</h1>
+                  </div>
+                  <div class="card-body col-md-7">
+                    <p class="card-title">{{Days.DaysTitle | titlecase}} </p>
+                    <p class="card-title">{{Days.DaysDescription | titlecase}} </p>
+                  </div>
+                <div class="col-md-3">
+                    <img *ngIf="Days.DaysImage != null" class=" w-100 img-fluid" style="max-height: 200px;" src="{{this.env.apiUrl}}{{Days.DaysImage}}" alt="">
+                    <img *ngIf="Days.DaysImage == null" class=" w-100 img-fluid" style="max-height: 200px;" src="{{this.env.apiUrl}}/no-logo/no-image.jpg}" alt="">
+                </div>
+                </div>
+            </div>
+      </div>
+    
+    <br><br><br>
+      <div class="row">
+        <div class="col-lg-12">
+          <h2 class="h2_clr pt-4">{{'Specific_tours.SERVICES' | translate}}</h2><hr>
+        </div>
+      </div>
+    
+      <div *ngFor="let Services of TourServices" class="row">
+        <div class="col-lg-12">
+          <h4 class="h2_clr pt-4">{{Services.ServiceTitle}}</h4>
+        </div>
+        <div class="col-lg-12">
+          <h5 class="h2_clr pt-4" style="font-size:16px;">{{Services.ServiceDescription}}</h5>
+        </div>
+      </div>
+    
+    
+    
+      <div class="row">
+        <div class="col-lg-12">
+          <h2 class="h2_clr pt-4">TERMS</h2><hr>
+        </div>
+      </div>
+    
+      <div *ngFor="let Terms of TourTerms"  class="row">
+        <div class="col-lg-12">
+          <h4 class="h2_clr pt-4">{{Terms.TermTitle}}</h4>
+        </div>
+        <div class="col-lg-12">
+          <h5 class="h2_clr pt-4"  style="font-size:16px;">{{Terms.TermDescription}}</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="form-check pt-4">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+               {{'Specific_tours.Flights are not included. Would you like to book flights?' | translate}}
+            </label>
+          </div>
+          <div class="pt-4 pb-4">
+            <a href="#"><img src="assets/images/btn-booknow.png" width="120px" ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="Price" class="container tab-pane fade"><br>
+      <div  class="row">
+        <div class="col-lg-12">
+          <h1 class="prgrm_title pt-3 pb-3">{{ProgramTitle}}</h1>
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="col-lg-12">
+          <table  class="table  table-bordered table-hover mytable">
+            <thead>
+              <tr class="price-table">
+                <th  colspan="5" class="text-center tourtitle">{{TourTitle}}</th>
+              </tr>
+              <tr  class="text-center">
+                <th></th>
+                <th *ngFor="let Prices of Price" >{{Prices.CategoryName}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let Prices of Price;index as i" class="text-center">
+                <th>{{Prices.StartDate | date: 'longDate'}} / {{Prices.EndDate | date:'longDate'}}</th> 
+                <th  *ngFor="let Prices of Price" > {{Prices.PriceIndividual}}</th>    
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <br><br>
+    </div>
+  </div>
+
+ 
+
+
+
+
+
+
+</div>
+<app-footer></app-footer>
+
+

@@ -1,0 +1,73 @@
+{
+    "Header": {
+        "Home": "Home",
+        "Destination": "Destination",
+        "Tours": "Tours",
+        "Contact Us": "Contact Us",
+        "Where :": "Where :",
+        "Find Tours": "Find Tours",
+        "All Destinations": "All Destinations",
+        "Tours & Activities": "Tours & Activities",
+        "Holidays": "Holidays",
+        "Special Offers": "Special Offers",
+        "Days": "Days",
+        "Nights": "Nights"
+        
+    },
+    "Footer": {
+        "Tour Agency": "Tour Agency",
+        "Book Now": "Book Now",
+        "Design": "Design",
+        "Fashion": "Fashion",
+        "Music": "Music",
+        "Top Deals": "Top Deals",
+        "Blog posts": "Blog posts",
+        "Travel with us this year": "Travel with us this year",
+        "New destinations for you": "New destinations for you",
+        "Contact Info": "Contact Info",
+        "Electronic Complex": "Electronic Complex",
+        "All rights reserved": "All rights reserved",
+        "Copyright": "Copyright"
+
+    },
+    "CountriesInDestination": {
+        "DESTINATION IN": "DESTINATION IN"
+    },
+    "Destination":{
+        "All Destinations": "All Destinations"
+    },
+    "Country": {
+        "SEE ALL THE TRIPS":"SEE ALL THE TRIPS",
+        "TRAVELAMOS RECOMMENDS": "TRAVELAMOS RECOMMENDS",
+        "DISCOVER": "DISCOVER",
+        "START": "START",
+        "TRAVELS": "TRAVELS",
+        "INFO": "INFO"
+    },
+    "countries-in-destinations":{
+        "HOME": "HOME",
+        "DESTINATION": "DESTINATION",
+        "DESTINATION TITLE IN": "DESTINATION TITLE IN"
+    },
+    "tours":{
+        "All Tour Packages": "All Tour Packages",
+        "TourStaticText": " Still not sure where to go ? We design our trip thinking of you  who you are and all the motivation that can lead you to want travel.so you can better find the trip you are looking for we have created these categories and types trips.",
+        "Where do you want to go ?" : "Where do you want to go ?",
+        "SEARCH FOR": "SEARCH FOR",
+        "SORT BY": "SORT BY",
+        "Lower Price": "Lower Price",
+        "Higher Price": "Higher Price",
+        "Shorter Duration": "Shorter Duration",
+        "Longer Duration": "Longer Duration",
+        "See Trip": "See Trip",
+        "Price From": "Price From",
+        "DAYS": "DAYS"
+    },
+    "Specific_tours":{
+        "ITINERARY": "ITINERARY",
+        "SERVICES":"SERVICES",
+        "OUR SERVICES":"OUR SERVICES",
+        "Day": "Day",
+        "Flights are not included. Would you like to book flights?": "Flights are not included. Would you like to book flights?"
+    }
+}

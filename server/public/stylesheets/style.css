@@ -1,0 +1,12 @@
+.mytext{
+  font-weight:bold;
+}
+.myback{
+  background:#007eff;
+  color:white !important;
+}
+.mybutton{
+  background:#6ae80afa;
+  color:white;
+  font-weight: bold;
+}

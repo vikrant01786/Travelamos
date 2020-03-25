@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
+@font-face
+{
+	font-family: 'Beyond';
+	src: url('../../../assets/fonts/beyond_the_mountains.otf')  format('truetype'),
+		 url('../../../assets/fonts/beyond_the_mountains.ttf')  format('opentype');
+}
+/*********************************
+4.1 Home Slider
+*********************************/
+
+.home_slider_container
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	background: #31124b;
+}
+.home_slider
+{
+	width: 100%;
+	height: 100%;
+}
+.home_slider_item
+{
+	width: 100%;
+	height: 100%;
+}
+.home_slider_background
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	opacity:0.9;
+}
+.home_slider_content
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	z-index: 11;
+}
+.home_slider_content h1
+{
+	margin-bottom: 0px;
+}
+.home_slider_content h1:first-child
+{
+	font-size: 112px;
+	font-weight: 900;
+	color: #FFFFFF;
+	text-transform: uppercase;
+}
+.home_slider_content h1:nth-child(2)
+{
+	font-family: 'Beyond';
+	font-size: 100px;
+	color: #FFFFFF;
+	margin-top: -34px;
+}
+.home_slider_button
+{
+	margin-top: 70px;
+}
+.flipInX
+{
+	animation-delay: 600ms;
+}
+.slider_heading{
+  /* font-size: 30px; */
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+.slider_heading_two{
+  font-family: 'Beyond';
+    font-size: 100px;
+    color: #FFFFFF;
+	margin-top: 90px;
+	
+}
+.animated {
+  -webkit-animation-duration: 0.9s;
+  animation-duration: 0.9s;
+}
+
+.head {
+	height: 600px;
+	width: 100%;
+	background: black;
+	overflow: hidden;
+  }
+
+  .head img {
+   object-fit: cover;
+   opacity: 0.6;
+  }
+  @media (max-width: 575.98px) { 
+
+h1{font-size: 20px;margin-top: -150px;}
+.slider_heading_two{font-size: 40px;line-height: 75px !important}
+.days{font-size: 16px !important;}
+
+  }
+
+  @media (min-width: 576px) and (max-width: 767.98px) {
+	h1{font-size: 20px;margin-top: -150px;}
+	.slider_heading_two{font-size: 50px;}
+	.days{font-size: 16px !important;}
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) { 
+	h1{font-size: 20px;}
+	.slider_heading_two{font-size: 60px;}
+	.days{font-size: 18px !important;}
+   }
+
+   @media (min-width: 992px) and (max-width: 1199.98px) {
+
+	.slider_heading_two{font-size: 70px;}
+    }

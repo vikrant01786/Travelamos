@@ -1,0 +1,344 @@
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->
+<ngx-spinner bdColor="#af00ff" size="large" color="#fff" type="line-scale-pulse-out">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="container" style="background-image: url('assets/images/background.jpg');">
+  <div class="row">
+      <div class="col-lg-12 text-center">
+          <h1 class=text-white><b><i class="fa fa-globe"></i>&nbsp;Price Category</b></h1>
+      </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+      <div class="col-lg-12">
+  <div class="card">
+      <div class="card-header country-head"><i class="fa fa-globe"></i>&nbsp;Price Category List</div>
+      <div class="card-body country-body">
+          <div class="row">
+              <div class="col-lg-6">
+                  <button type="button" (click)="resetData(priceCategoryForm)" class="btn btn1 btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>&nbsp;Add New Price Category</button>
+              </div>
+              <div class="col-lg-3 text-right">
+                <select class="form-control  input-box rounded-1"  #Languagebox (change)="DisplayPriceCategoryAccordingToLang(Languagebox.value);">
+                    <option value="EN">English</option>
+                    <option *ngFor="let Language of languages" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                </select> 
+           </div>
+           <div class="col-lg-3">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
+                <input type="text" class="form-control input-box" [(ngModel)]="term" placeholder="Search...">
+              </div>
+           
+           </div>
+          </div>
+          <br>
+          <div class="row">
+              <div class="col-lg-12 col-md-12">
+                  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-responsive row-border hover">
+                      <thead class="bg-primary text-white text-center">
+                          <tr style="white-space:nowrap;">
+                              <th>Sl No</th>
+                              <th>Add More Language</th>
+                              <th>Tour Name</th>
+                              <th>Category Name</th>
+                              <th>Start Date</th>
+                              <th>End Date</th>
+                              <th>Price Individual</th>
+                              <th>Guest Price</th>
+                              <th>Language</th>
+                              <th>Created On</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let Price of priceCategoryData |filter:term; index as i" class="text-center">
+                              <td>{{i+1}}</td>
+                              <td>
+                                  <button *ngIf="Price.LanguageValue === 'EN'" (click)="GetPriceCategoryDetails(Price)" data-toggle="modal" data-target="#AddMoreLanguage" class="btn btn-primary btn-xs" ><i class="fa fa-plus"></i>&nbsp;Add More Language</button>
+                              </td>
+                              <td>{{Price.TourName}}</td>
+                              <td>{{Price.CategoryNameEn | titlecase}}</td>
+                              <td>{{Price.StartDate}}</td>
+                              <td>{{Price.EndDate}}</td>
+                              <td>{{Price.PriceIndividual}}</td>
+                              <td>{{Price.GuestPrice}}</td>
+                              <td style="color:red"><b>{{Price.LanguageValue === 'EN'? 'English':Price.LanguageName}}</b></td>
+                              <td>{{Price.CreatedOn | date: 'short'}}</td>
+                              <td style="display:inline-flex">
+                                  <button class="btn btn-danger btn-xs" title="Delete Price Category" (click)="sendPriceCategoryDetailsToModalPopUp(Price);" data-toggle="modal" data-target="#DeleteModal"><i class="ti-trash"></i></button>
+                                  <button *ngIf="Price.LanguageValue === 'EN'" class="btn btn-primary btn-xs" title="Edit Price Category" (click)="editPriceCategory(Price)" data-toggle="modal" data-target="#myModal"><i class="ti-pencil-alt"></i></button>
+                                  <button *ngIf="Price.LanguageValue !== 'EN'" class="btn btn-primary btn-xs" title="Edit Price Category" (click)="editPriceCategoryNewOption(Price)" data-toggle="modal" data-target="#AddMoreLanguage"><i class="ti-pencil-alt"></i></button>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+</div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+          <form #priceCategoryForm="ngForm">
+              <div class="modal-header destination-header text-center" style="background-image: url('assets/images/background.jpg');">
+                  <h4 class="modal-title text-white"><i class="fa fa-globe"></i>&nbsp;Add New Price Category </h4>
+                  <button type="button" (click)="resetData(priceCategoryForm)" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+              </div>
+              <br>
+              <br>
+              <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details In English</b></span></h4>
+                    </div>
+                </div><br>
+                  <div class="row">
+                    <div class="col-lg-6 my-label">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text my-label">Tour Title</span>
+                            </div>
+                            <select class="form-control input-box" #tourBox="ngModel" [class.is-invalid]="tourBox.invalid && tourBox.touched" (ngModelChange)="FindTourLocationIDByTourID($event)" name="TourID" #TourTextBox [(ngModel)]="price.TourID" required>
+                                <option value="">Select Tour</option>
+                                <option *ngFor="let Tour of tourData" value="{{Tour.Id}}">{{Tour.TourTitle | titlecase}}</option>
+                            </select>
+                        </div>
+                        <div class="text-center " *ngIf="tourBox.errors && (tourBox.invalid && tourBox.touched)">
+                            <small class=" error-mesg" *ngIf="tourBox?.errors.required"><b>Please Select Tour Title Field**</b></small>
+                          </div>
+                    </div>
+                      <div class="col-lg-6 my-label">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text my-label">Category *</span>
+                              </div>
+                              <select class="form-control input-box" #category="ngModel" [class.is-invalid]="category.invalid && category.touched" name="CategoryID" #CategoryTextBox [(ngModel)]="price.CategoryID" required>
+                                  <option value="">Select Category</option>
+                                  <option *ngFor="let Category of categoryData" value="{{Category.Id}}">{{Category.CategoryName}}</option>
+                              </select>
+                          </div>
+                          <div class="text-center " *ngIf="category.errors && (category.invalid && category.touched)">
+                            <small class=" error-mesg" *ngIf="category?.errors.required"><b>Please Select Category Field**</b></small>
+                          </div>
+                      </div>
+
+                  </div>
+                  <br>
+                  <br>
+                  <div class="row">
+                      <div class="col-lg-6 my-label">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Start Date</span>
+                              </div>
+                              <input type="date" name="StartDate" [(ngModel)]="price.StartDate" class="form-control input-box" placeholder="Start Date">
+                          </div>
+                      </div>
+                      <div class="col-lg-6 my-label">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">End Date</span>
+                              </div>
+                              <input type="date" name="EndDate" [(ngModel)]="price.EndDate" class="form-control input-box" placeholder="End Date">
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="row">
+                      <div class="col-lg-6 my-label">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Price Individual</span>
+                              </div>
+                              <input type="text" name="PriceIndividual" [(ngModel)]="price.PriceIndividual" class="form-control input-box" placeholder="Price Individual">
+                          </div>
+                      </div>
+                      <div class="col-lg-6 my-label">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Guest Price</span>
+                              </div>
+                              <input type="text" name="GuestPrice" [(ngModel)]="price.GuestPrice" class="form-control input-box" placeholder="Guest Price">
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+                  <br>
+              </div>
+              <div class="modal-footer">
+                  <button type="submit" [disabled]="priceCategoryForm.invalid" class="btn btn-primary my-button btn-lg darkblue" (click)="savePriceCategory(priceCategoryForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+                  <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+                  <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetData(priceCategoryForm)" data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+
+
+<!-- Add More Language Modal Starts -->
+<div id="AddMoreLanguage" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+  
+        <!-- Modal content-->
+        <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+            <form #priceCategoryNewOptionForm="ngForm">
+                <div class="modal-header destination-header text-center" style="background-image: url('assets/images/background.jpg');">
+                    <h4 class="modal-title text-white"><i class="fa fa-globe"></i>&nbsp;Add New Price Category </h4>
+                    <button type="button" (click)="resetDataSecondModal(priceCategoryNewOptionForm)" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+                </div>
+                <br>
+                <br>
+                <div class="modal-body">
+                  <div class="row">
+                      <div class="col-lg-12 text-center">
+                        <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details In English</b></span></h4>
+                      </div>
+                  </div><br>
+                  <div class="row">
+                      <div class="col-lg-8 mx-auto">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Select Language *</span>
+                            </div>
+                           <select class="form-control input-box" #LanguageTextBox  name="LanguageValue" #language="ngModel" [class.is-invalid]="language.invalid && language.touched" [(ngModel)]="priceNewOption.LanguageValue"  (ngModelChange)="ChangeLabels($event);" required>
+                               <option value="">Select Language</option>
+                               <option *ngFor="let Language of languagesData" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                           </select>
+                           
+                        </div>
+                        <div class="text-center " *ngIf="language.errors && (language.invalid && language.touched)">
+                            <small class=" error-mesg" *ngIf="language?.errors.required"><b>Please Select Language Field**</b></small>
+                          </div>
+                      </div>
+                     
+                  </div><br><br>
+                    <div class="row">
+                      <div class="col-lg-6 my-label">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text my-label">Tour Title</span>
+                              </div>
+                              <select class="form-control input-box" #tourBox="ngModel" [class.is-invalid]="tourBox.invalid && tourBox.touched" (ngModelChange)="FindTourLocationIDByTourID($event)" name="TourID" #TourTextBox [(ngModel)]="priceNewOption.TourID" required>
+                                  <option value="">Select Tour</option>
+                                  <option *ngFor="let Tour of tourDataNewOption" value="{{Tour.Id}}">{{Tour.TourTitle | titlecase}}</option>
+                              </select>
+                          </div>
+                          <div class="text-center " *ngIf="tourBox.errors && (tourBox.invalid && tourBox.touched)">
+                              <small class=" error-mesg" *ngIf="tourBox?.errors.required"><b>Please Select Tour Title Field**</b></small>
+                            </div>
+                      </div>
+                        <div class="col-lg-6 my-label">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text my-label">Category *</span>
+                                </div>
+                                <select class="form-control input-box" #category="ngModel" [class.is-invalid]="category.invalid && category.touched" name="CategoryID" #CategoryTextBox [(ngModel)]="priceNewOption.CategoryID" required>
+                                    <option value="">Select Category</option>
+                                    <option *ngFor="let Category of categoryData" value="{{Category.Id}}">{{Category.CategoryName}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="category.errors && (category.invalid && category.touched)">
+                              <small class=" error-mesg" *ngIf="category?.errors.required"><b>Please Select Category Field**</b></small>
+                            </div>
+                        </div>
+  
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6 my-label">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Start Date</span>
+                                </div>
+                                <input type="date" name="StartDate" [(ngModel)]="priceNewOption.StartDate" class="form-control input-box" placeholder="Start Date">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 my-label">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">End Date</span>
+                                </div>
+                                <input type="date" name="EndDate" [(ngModel)]="priceNewOption.EndDate" class="form-control input-box" placeholder="End Date">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6 my-label">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Price Individual</span>
+                                </div>
+                                <input type="text" name="PriceIndividual" [(ngModel)]="priceNewOption.PriceIndividual" class="form-control input-box" placeholder="Price Individual">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 my-label">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Guest Price</span>
+                                </div>
+                                <input type="text" name="GuestPrice" [(ngModel)]="priceNewOption.GuestPrice" class="form-control input-box" placeholder="Guest Price">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" [disabled]="priceCategoryNewOptionForm.invalid" class="btn btn-primary my-button btn-lg darkblue" (click)="savePriceCategoryNewOption(priceCategoryNewOptionForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+                    <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+                    <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetDataSecondModal(priceCategoryNewOptionForm)" data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+<!-- Add More Language Modal Ends -->
+
+
+
+
+<!-- The Delete Modal -->
+<div class="modal fade" id="DeleteModal">
+  <div class="modal-dialog">
+      <div class="modal-content deletemodal-country">
+
+          <!-- Delete Modal Header -->
+          <div class="modal-header"  style="background-image: url('assets/images/background.jpg');">
+              <h4 class="modal-title delete-title text-white">Delete</h4>
+              <button type="button" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body delete-body text-center">
+              <b><i class="ti-alert"></i>&nbsp;Are You Sure You Want To Delete &nbsp;&nbsp;?</b>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer mx-auto">
+              <button type="button" (click)="deletePriceCategory(priceDetails)" data-dismiss="modal" class="btn btn-success btn-sm all-button "><i class="ti ti-trash"></i>&nbsp;Yes</button>
+              <button type="button" class="btn btn-danger btn-sm all-button " data-dismiss="modal"><i class="ti ti-close"></i>&nbsp;No</button>
+          </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,369 @@
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->
+<ngx-spinner bdColor="#af00ff" size="large" color="#fff" type="line-scale-pulse-out">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="container" style="background-image: url('assets/images/background.jpg');">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1 class="text-white"><b><i class="fa fa-picture-o"></i>&nbsp;Hotel Images</b></h1>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header country-head"><i class="fa fa-picture-o"></i>&nbsp;Hotel Images List</div>
+                <div class="card-body country-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <button type="button" class="btn btn1 btn-sm" (click)="resetData(hotelImagesForm)"
+                                data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>&nbsp;Add New Hotel
+                                Image</button>
+                        </div>
+                        <div class="col-lg-3 text-right">
+                            <select class="form-control  input-box rounded-1"  #Languagebox (change)="DisplayHotelImagesAccordingToLang(Languagebox.value);">
+                                <option value="EN">English</option>
+                                <option *ngFor="let Language of languages" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                            </select>
+                       </div>
+                       <div class="col-lg-3">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control input-box" [(ngModel)]="term" placeholder="Search...">
+                          </div>
+                    </div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                                class="table-responsive row-border hover">
+                                <thead class="bg-primary text-white text-center">
+                                    <tr style="white-space:nowrap;">
+                                        <th>Sl No</th>
+                                        <th>Add More Language</th>
+                                        <th>Country</th>
+                                        <th>City</th>
+                                        <th>Hotel Name</th>
+                                        <th>Hotel Images</th>
+                                        <th>Images Description</th>
+                                        <th>Language</th>
+                                        <th>Created On</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let HotelImages of hotelImagesData | filter:term;index as i" class="text-center">
+                                        <td>{{i+1}}</td>
+                                        <td>
+                                            <button *ngIf="HotelImages.LanguageValue === 'EN'" (click)="getHotelImagesDetail(HotelImages)" data-toggle="modal" data-target="#AddMoreLanguage" class="btn btn-info btn-xs"><i class="fa fa-plus"></i>&nbsp;Add More Language</button>
+                                        </td>
+                                        <td>{{HotelImages.CountryNameInEnglish |titlecase}}</td>
+                                        <td>{{HotelImages.CityNameInEnglish |titlecase}}</td>
+                                        <td>{{HotelImages.HotelNameInEnglish |titlecase}}</td>
+                                        <td><img src={{this.env.apiUrl}}{{HotelImages.HotelImages}}
+                                                class="img-thumbnail" style="border-radius:10px;" height="20px;"
+                                                width="100px;"></td>
+                                        <td class="Description">{{HotelImages.ImagesDescription === 'null' || HotelImages.ImagesDescription === ''? '--': HotelImages.ImagesDescription |titlecase}}
+                                        </td>
+                                       <td style="color:red"><b>{{HotelImages.LanguageValue === 'EN'? 'English':HotelImages.LanguageName}}</b></td>
+                                       <td>{{HotelImages.CreatedOn | date:'short'}}</td>
+                                        <td style="display:inline-flex">
+                                            <button  class="btn btn-danger btn-xs mt-4"  title="Delete City" (click)="sendHotelImagesDetailsToModalPopUp(HotelImages);"data-toggle="modal" data-target="#DeleteModal"><i class="ti-trash"></i></button>
+                                            <button *ngIf="HotelImages.LanguageValue === 'EN'" class="btn btn-primary btn-xs mt-4" title="Edit City" (click)="editHotelImages(HotelImages)" data-toggle="modal" data-target="#myModal"><i class="ti-pencil-alt"></i></button>
+                                            <button *ngIf="HotelImages.LanguageValue !== 'EN'" class="btn btn-primary btn-xs mt-4" title="Edit City" (click)="editHotelImagesNewOption(HotelImages)" data-toggle="modal" data-target="#AddMoreLanguage"><i class="ti-pencil-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+            <form #hotelImagesForm="ngForm">
+                <div class="modal-header destination-header text-center"
+                    style="background-image: url('assets/images/background.jpg');">
+                    <h4 class="modal-title text-white"><i class="fa fa-picture-o"></i>&nbsp;Add New Hotel Image</h4>
+                    <button type="button" (click)="resetData(hotelImagesForm)" class="close text-white cross-button"
+                        data-dismiss="modal">&times;</button>
+                </div>
+                <br>
+                <br>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                          <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details In English</b></span></h4>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Country</span>
+                                </div>
+                                <select class="form-control input-box" #countryId [class.is-invalid]="countryBox.invalid && countryBox.touched"  #countryBox="ngModel" (ngModelChange)="getCityNameByCountryId($event)" name="CountryID" [(ngModel)]="hotelimages.CountryID" required>
+                                    <option value="">Select Country</option>
+                                    <option *ngFor="let Country of countryData" value="{{Country.Id}}">{{Country.CountryName |titlecase}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="countryBox.errors && (countryBox.invalid && countryBox.touched)">
+                                <small class=" error-mesg" *ngIf="countryBox?.errors.required"><b>Please Select Country
+                                        Field**</b></small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">City</span>
+                                </div>
+                                <select class="form-control input-box" #cityId #cityBox="ngModel" (ngModelChange)="getHotelNameByCityId($event)" [class.is-invalid]="cityBox.invalid && cityBox.touched" name="CityID" [(ngModel)]="hotelimages.CityID" required>
+                                    <option value="">Select City</option>
+                                    <option *ngFor="let City of cityData" value="{{City.Id}}">{{City.CityName | titlecase}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="cityBox.errors && (cityBox.invalid && cityBox.touched)">
+                                <small class=" error-mesg" *ngIf="cityBox?.errors.required"><b>Please Select City
+                                        Field**</b></small>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Hotel</span>
+                                </div>
+                                <select class="form-control input-box" #hotel  name="HotelID" (ngModelChange)="getHotelLocationIDByHotelID($event)"  #hotelBox="ngModel" [class.is-invalid]="hotelBox.invalid && hotelBox.touched" [(ngModel)]="hotelimages.HotelID" required>
+                                    <option value="">Select Hotel</option>
+                                    <option *ngFor="let Hotel of hotelData" value="{{Hotel.Id}}">
+                                        {{Hotel.HotelName | titlecase}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="hotelBox.errors && (hotelBox.invalid && hotelBox.touched)">
+                                <small class=" error-mesg" *ngIf="hotelBox?.errors.required"><b>Please Select Hotel
+                                        Field**</b></small>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-2 mx-auto">
+                            <h2><span class="badge badge-primary image-label"><i class="fa fa-picture-o"></i>&nbsp;Hotel
+                                    Image</span></h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6  mx-auto">
+                            <ngx-image-uploader [options]="options" [(ngModel)]="image" name="HotelImages"
+                                (upload)="onUpload($event)" required></ngx-image-uploader>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <!-- form data -->
+                            <label><b>Image Description</b></label>
+                          <textarea name="ImagesDescription" [(ngModel)]="hotelimages.ImagesDescription" class="form-control input-box"></textarea>
+                          
+                            
+                        </div> 
+                    </div>
+                    <br>
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <button *ngIf="hotelimages.Id == null" [disabled]="hotelImagesForm.invalid" type="submit"
+                        class="btn btn-primary my-button btn-lg darkblue" (click)="onsubmit(hotelImagesForm)"
+                        data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+                    <button *ngIf="hotelimages.Id != null" [disabled]="hotelImagesForm.invalid" type="submit"
+                        class="btn btn-primary my-button btn-lg darkblue" (click)="onsubmit(hotelImagesForm)"
+                        data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Update</button>
+                    <button type="reset" class="btn btn-info reset-button btn-lg blue"><span
+                            class="ti-control-shuffle"></span>&nbsp;Reset</button>
+                    <button type="button" class="btn btn-danger close-button btn-lg red"
+                        (click)="resetData(hotelImagesForm)" data-dismiss="modal"><span
+                            class="ti-close"></span>&nbsp;Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Add More Languages Starts -->
+<div id="AddMoreLanguage" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+            <form #hotelImagesNewOptionForm="ngForm">
+                <div class="modal-header destination-header text-center" style="background-image: url('assets/images/background.jpg');">
+                    <h4 class="modal-title text-white"><i class="fa fa-picture-o"></i>&nbsp;Add New Hotel Image</h4>
+                    <button type="button" (click)="resetAddMoreLangModal(hotelImagesNewOptionForm)" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+                </div>
+                <br>
+                <br>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                          <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details According To Selected Language</b></span></h4>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Select Language</span>
+                                </div>
+                                <select class="form-control input-box" #LanguageTextBox name="LanguageValue" #language="ngModel" [class.is-invalid]="language.invalid && language.touched" [(ngModel)]="hotelimagesNewOption.LanguageValue" (ngModelChange)="ChangeLabels(LanguageTextBox.value);" required>
+                                    <option value="">Select Language</option>
+                                    <option *ngFor="let Language of languagesData" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="language.errors && (language.invalid && language.touched)">
+                                <small class=" error-mesg" *ngIf="language?.errors.required"><b>Please Select Language Field**</b></small>
+                            </div>
+                        </div>
+                    </div><br><br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Country</span>
+                                </div>
+                                <select class="form-control input-box" #countryId (ngModelChange)="getCityByCountry($event);" [class.is-invalid]="countryBox.invalid && countryBox.touched"  #countryBox="ngModel" (ngModelChange)="getCityNameByCountryId($event)" name="CountryID" [(ngModel)]="hotelimagesNewOption.CountryID" required>
+                                    <option value="">Select Country</option>
+                                    <option *ngFor="let Country of CountryListsInNewOption"  value="{{Country.Id}}">{{Country.CountryName |titlecase}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="countryBox.errors && (countryBox.invalid && countryBox.touched)">
+                                <small class=" error-mesg" *ngIf="countryBox?.errors.required"><b>Please Select Country Field**</b></small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">City</span>
+                                </div>
+                                <select class="form-control input-box" #cityBox #cityBox="ngModel" (ngModelChange)="getCityLocationIDInCityImages($event)" [class.is-invalid]="cityBox.invalid && cityBox.touched" name="CityID" [(ngModel)]="hotelimagesNewOption.CityID" required>
+                                    <option value="">Select City</option>
+                                    <option *ngFor="let City of CityListsInNewOption" value="{{City.Id}}">{{City.CityName | titlecase}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="cityBox.errors && (cityBox.invalid && cityBox.touched)">
+                                <small class=" error-mesg" *ngIf="cityBox?.errors.required"><b>Please Select City Field**</b></small>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Hotel</span>
+                                </div>
+                                <select class="form-control input-box" #hotel  name="HotelID" (ngModelChange)="getHotelLocationIDByHotelIDInHotemImages($event)"  #hotelBox="ngModel" [class.is-invalid]="hotelBox.invalid && hotelBox.touched" [(ngModel)]="hotelimagesNewOption.HotelID" required>
+                                    <option value="">Select Hotel</option>
+                                    <option *ngFor="let Hotel of HotelListsInNewOption" value="{{Hotel.Id}}">{{Hotel.HotelName | titlecase}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="hotelBox.errors && (hotelBox.invalid && hotelBox.touched)">
+                                <small class=" error-mesg" *ngIf="hotelBox?.errors.required"><b>Please Select Hotel
+                                        Field**</b></small>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-2 mx-auto">
+                            <h2><span class="badge badge-primary image-label"><i class="fa fa-picture-o"></i>&nbsp;Hotel
+                                    Image</span></h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6  mx-auto">
+                            <ngx-image-uploader [options]="options" [(ngModel)]="image" name="HotelImages"
+                                (upload)="onUpload($event)" required></ngx-image-uploader>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <!-- form data -->
+                            <label><b>Image Description</b></label>
+                          <textarea name="ImagesDescription" [(ngModel)]="hotelimagesNewOption.ImagesDescription" class="form-control input-box"></textarea>   
+                        </div> 
+                    </div>
+                    <br>
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <button *ngIf="hotelimages.Id == null" [disabled]="hotelImagesNewOptionForm.invalid" type="submit" class="btn btn-primary my-button btn-lg darkblue" (click)="saveHotelImagesNewOption(hotelImagesNewOptionForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+                    <button *ngIf="hotelimages.Id != null" [disabled]="hotelImagesNewOptionForm.invalid" type="submit" class="btn btn-primary my-button btn-lg darkblue" (click)="saveHotelImagesNewOption(hotelImagesNewOptionForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Update</button>
+                    <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+                    <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetData(hotelImagesForm)" data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add More Languages Ends -->
+<!-- The Delete Modal -->
+<div class="modal fade" id="DeleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content deletemodal-country">
+
+            <!-- Delete Modal Header -->
+            <div class="modal-header" style="background-image: url('assets/images/background.jpg');">
+                <h4 class="modal-title delete-title text-white">Delete</h4>
+
+                <button type="button" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body delete-body text-center">
+                <b><i class="ti-alert"></i>&nbsp;Are You Sure You Want To Delete &nbsp;&nbsp;?</b>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer mx-auto">
+                <button type="button" (click)="deleteHotelImages(hotelImageDetails)" data-dismiss="modal"
+                    class="btn btn-success btn-sm all-button "><i class="ti ti-trash"></i>&nbsp;Yes</button>
+                <button type="button" class="btn btn-danger btn-sm all-button " data-dismiss="modal"><i
+                        class="ti ti-close"></i>&nbsp;No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->

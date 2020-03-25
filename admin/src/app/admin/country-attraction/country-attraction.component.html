@@ -1,0 +1,306 @@
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->
+<ngx-spinner bdColor="#af00ff" size="large" color="#fff" type="line-scale-pulse-out">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="container" style="background-image: url('assets/images/background.jpg');">
+  <div class="row">
+      <div class="col-lg-12 text-center">
+          <h1 class="text-white"><b><i class="fa fa-picture-o"></i>&nbsp;Country Attraction Images</b></h1>
+      </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+  <div class="col-lg-12">
+  <div class="card">
+      <div class="card-header country-head"><i class="fa fa-picture-o"></i>&nbsp;Country Attraction List</div>
+      <div class="card-body country-body">
+          <div class="row">
+              <div class="col-lg-6">
+                  <button type="button" class="btn btn1 btn-sm"  data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>&nbsp;Add New Country Attraction Image</button>
+              </div>
+              <div class="col-lg-3 text-right">
+                <select class="form-control  input-box rounded-1" #Languagebox (change)="DisplayAttractionImagesAccordingToLang(Languagebox.value);">
+                    <option value="EN">English</option>
+                    <option *ngFor="let Language of languages" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                </select>
+           </div>
+           <div class="col-lg-3">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
+                <input type="text" class="form-control input-box" [(ngModel)]="term" placeholder="Search...">
+              </div>
+           </div>
+          </div>
+          <br>
+          <div class="row">
+              <div class="col-lg-12 col-md-12">
+                  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-responsive .table-bordered row-border hover">
+                      <thead class="bg-primary text-white text-center">
+                          <tr style="white-space:nowrap;">
+                              <th>Sl No</th>
+                              <th>Add More Language</th>
+                              <th>Country</th>
+                              <th>Attraction Image</th>
+                              <th>Attraction Description</th>
+                              <th>Attraction Title</th>
+                              <th>Language</th>
+                              <th>CreatedOn</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let Attraction of AttractionImagesData | filter:term; index as i" class="text-center">
+                              <td>{{i+1}}</td>
+                              <td>
+                                  <button *ngIf="Attraction.LanguageValue === 'EN'"  (click)="getCountryAttractionImageDetail(Attraction)" class="btn btn-info btn-xs"  data-toggle="modal" data-target="#AddMoreLanguage"><i class="fa fa-plus"></i>&nbsp;Add More Language</button>
+                              </td>
+                              <td>{{Attraction.CountryNameEn}}</td>
+                              <td><img src="{{this.env.apiUrl}}{{Attraction.AttractionImage}}" class="img-thumbnail" style="border-radius:10px;" height="20px;" width="100px;"></td>
+                              <td class="Description">{{Attraction.AttractionDescription === 'null' || Attraction.AttractionDescription === ''? '--':Attraction.AttractionDescription | titlecase}}</td>
+                              
+                              <td>{{Attraction.AttractionTitle === 'null' || Attraction.AttractionTitle === ''? '--': Attraction.AttractionTitle |titlecase}}</td>
+                              <td style="color:red;"><b>{{Attraction.LanguageValue === 'EN'? 'English':Attraction.LanguageName}}</b></td>
+                              <td>{{Attraction.CreatedOn | date: 'short'}}</td>
+                              <td style="display:inline-flex">
+                                  <button class="btn btn-danger btn-xs mt-4" title="Delete Attraction Image" (click)="sendCountryAttractionImagesDetailsToModalPopUp(Attraction);" data-toggle="modal" data-target="#DeleteModal"><i class="ti-trash"></i></button>
+                                  <button *ngIf="Attraction.LanguageValue === 'EN'" class="btn btn-primary btn-xs mt-4" title="Edit Attraction Image" (click)="editAttractionImages(Attraction)" data-toggle="modal" data-target="#myModal"><i class="ti-pencil-alt"></i></button>
+                                  <button *ngIf="Attraction.LanguageValue !== 'EN'" class="btn btn-primary btn-xs mt-4" title="Edit Attraction Image" (click)="editAttractionImagesNewOption(Attraction)" data-toggle="modal" data-target="#AddMoreLanguage"><i class="ti-pencil-alt"></i></button>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+</div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+          <form #AttractionImagesForm="ngForm">
+              <div class="modal-header destination-header text-center" style="background-image: url('assets/images/background.jpg');">
+                  <h4 class="modal-title text-white" data-toggle="tooltip" data-placement="left" title="Add New Country"><i class="fa fa-picture-o"></i>&nbsp;Add New Country Attraction Image</h4>
+                  <button type="button" (click)="resetData(AttractionImagesForm)" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+              </div>
+              <br>
+              <br>
+              <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details In English</b></span></h4>
+                    </div>
+                </div><br>
+                  <div class="row">
+                      <div class="col-lg-8 mx-auto">
+                          <!-- form data -->
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Country</span>
+                              </div>
+                              <select class="form-control input-box" name="CountryID" (ngModelChange)="onChange($event)" #countryBox="ngModel" [class.is-invalid]="countryBox.invalid && countryBox.touched" #CountryTextBox [(ngModel)]="country.CountryID" required>
+                                  <option value="">Select Country</option>
+                                  <option *ngFor="let Country of countryData" value="{{Country.Id}}">{{Country.CountryName}}</option>
+                              </select>
+                          </div>
+                          <div class="text-center " *ngIf="countryBox.errors && (countryBox.invalid && countryBox.touched)">
+                            <small class=" error-mesg" *ngIf="countryBox?.errors.required"><b>Please Select Country Field**</b></small>
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="row text-center">
+                      <div class="col-lg-12">
+                          <h2><span class="badge badge-primary image-label"><i class="fa fa-picture-o"></i>&nbsp;Country Attraction Image</span></h2>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-6 mx-auto">
+                          <ngx-image-uploader [options]="options" [(ngModel)]="image" name="AttractionImage" (upload)="onUpload($event)" required></ngx-image-uploader>
+                      </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="row">
+                
+                      <div class="col-lg-8 mx-auto">
+                        <!-- form data -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Attraction Title</span>
+                            </div>
+                            <input type="text" name="AttractionTitle" [(ngModel)]="country.AttractionTitle" class="form-control input-box" placeholder="Attraction Title">
+                        </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <!-- form data -->
+                      <label><b>Attraction Description</b></label>
+                           
+                            <!-- <input type="text" name="AttractionDescription" [(ngModel)]="country.AttractionDescription" class="form-control input-box" placeholder="Attraction Description"> -->
+                     <textarea   name="AttractionDescription" [(ngModel)]="country.AttractionDescription" class="form-control input-box"></textarea>
+                    </div>
+                  </div><br><br>
+              </div>
+              <div class="modal-footer">
+                  <button *ngIf="this.country.AttractionId == null" [disabled]="AttractionImagesForm.invalid" type="submit" class="btn btn-primary my-button btn-lg darkblue" (click)="onsubmit(AttractionImagesForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+                  <button *ngIf="this.country.AttractionId != null" [disabled]="AttractionImagesForm.invalid" type="submit" class="btn btn-primary my-button btn-lg darkblue" (click)="onsubmit(AttractionImagesForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Update</button>
+                  <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+                  <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetData(AttractionImagesForm)" data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+<!-- Add More Language Starts -->
+<div id="AddMoreLanguage" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+  
+        <!-- Modal content-->
+        <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+            <form #AttractionImagesNewOptionForm="ngForm">
+                <div class="modal-header destination-header text-center" style="background-image: url('assets/images/background.jpg');">
+                    <h4 class="modal-title text-white" data-toggle="tooltip" data-placement="left" title="Add New Country"><i class="fa fa-picture-o"></i>&nbsp;Add New Country Attraction Image</h4>
+                    <button type="button"  class="close text-white cross-button" data-dismiss="modal">&times;</button>
+                </div>
+                <br>
+                <br>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                          <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details According To Selected Language</b></span></h4>
+                        </div>
+                    </div><br>
+                  <div class="row">
+                      <div class="col-lg-8 mx-auto">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Select Language</span>
+                            </div>
+                           <select class="form-control input-box" #LanguageTextBox name="LanguageValue"[class.is-invalid]="language.invalid && language.touched" #language="ngModel" [(ngModel)]="countryAttractionNewOption.LanguageValue"  (change)="ChangeLabels(LanguageTextBox.value);" required>
+                               <option value="" selected disabled >Select Language</option>
+                               <option *ngFor="let Language of languagesData" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                           </select>
+                        </div>
+                        <div class="text-center " *ngIf="language.errors && (language.invalid && language.touched)">
+                          <small class=" error-mesg" *ngIf="language?.errors.required"><b>Please Select Language Field**</b></small>
+                        </div>
+                      </div>
+                  </div><br><br>
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <!-- form data -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Country</span>
+                                </div>
+                                <select class="form-control input-box" name="CountryID" #countryBox="ngModel" [class.is-invalid]="countryBox.invalid && countryBox.touched" #CountryTextBox [(ngModel)]="countryAttractionNewOption.CountryID" required>
+                                    <option value="">Select Country</option>
+                                    <option *ngFor="let Country of CountryAttractionListsInNewOption" value="{{Country.Id}}">{{Country.CountryName}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="countryBox.errors && (countryBox.invalid && countryBox.touched)">
+                              <small class=" error-mesg" *ngIf="countryBox?.errors.required"><b>Please Select Country Field**</b></small>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row text-center">
+                        <div class="col-lg-12">
+                            <h2><span class="badge badge-primary image-label"><i class="fa fa-picture-o"></i>&nbsp;Country Attraction Image</span></h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 mx-auto">
+                            <ngx-image-uploader [options]="options" [(ngModel)]="image" name="AttractionImage" (upload)="onUpload($event)" required></ngx-image-uploader>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                   
+                        <div class="col-lg-8 mx-auto">
+                          <!-- form data -->
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Attraction Title</span>
+                              </div>
+                              <input type="text" name="AttractionTitle" [(ngModel)]="countryAttractionNewOption.AttractionTitle" class="form-control input-box" placeholder="Attraction Title">
+                          </div>
+                      </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <!-- form data -->
+                          
+                               <label><b>Attraction Description</b></label>
+                                <!-- <input type="text" name="AttractionDescription" [(ngModel)]="countryAttractionNewOption.AttractionDescription" class="form-control input-box" placeholder="Attraction Description"> -->
+                          <textarea name="AttractionDescription" [(ngModel)]="countryAttractionNewOption.AttractionDescription" class="form-control input-box"></textarea>
+                        </div>
+                    </div><br><br>
+                </div>
+                <div class="modal-footer">
+                    <button *ngIf="this.country.AttractionId == null" [disabled]="AttractionImagesNewOptionForm.invalid" type="submit" class="btn btn-primary my-button btn-lg darkblue" (click)="SaveAttractionImageNewOption(AttractionImagesForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+                    <button *ngIf="this.country.AttractionId != null" [disabled]="AttractionImagesNewOptionForm.invalid" type="submit" class="btn btn-primary my-button btn-lg darkblue" (click)="SaveAttractionImageNewOption(AttractionImagesForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Update</button>
+                    <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+                    <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetData(AttractionImagesNewOptionForm)" data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+<!-- Add More Language Ends -->
+
+
+
+<!-- The Delete Modal -->
+<div class="modal fade" id="DeleteModal">
+  <div class="modal-dialog">
+      <div class="modal-content deletemodal-country">
+
+          <!-- Delete Modal Header -->
+          <div class="modal-header"  style="background-image: url('assets/images/background.jpg');">
+              <h4 class="modal-title delete-title text-white">Delete</h4>
+              <button type="button" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body delete-body text-center">
+              <b><i class="ti-alert"></i>&nbsp;Are You Sure You Want To Delete &nbsp;{{AttractionImageDetails.AttractionTitleInEnglish}}&nbsp;?</b>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer mx-auto">
+              <button type="button" (click)="deleteAttractionImages(AttractionImageDetails)" data-dismiss="modal" class="btn btn-success btn-sm all-button "><i class="ti ti-trash"></i>&nbsp;Yes</button>
+              <button type="button" class="btn btn-danger btn-sm all-button " data-dismiss="modal"><i class="ti ti-close"></i>&nbsp;No</button>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->

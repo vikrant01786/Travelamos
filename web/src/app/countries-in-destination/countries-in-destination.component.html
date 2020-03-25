@@ -1,0 +1,233 @@
+<!-- <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">  -->
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet">
+<app-header></app-header>
+<agm-map 
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [disableDefaultUI]="false"
+  [zoomControl]="false">
+  <!-- (mapClick)="mapClicked($event)" -->
+
+  <agm-marker 
+      *ngFor="let Country of markers; let i = index"
+      (mouseOver)="onMouseOver(infoWindow, $event)" 
+      [latitude]="Country.lat"
+      [longitude]="Country.lng"
+      [label]="Country.label"
+      [markerDraggable]="Country.draggable"
+      >
+      <!-- (dragEnd)="markerDragEnd(m, $event)" -->
+    <agm-info-window  [disableAutoPan]="false" #infoWindow>
+      <a (click)="ShowCountries(Country)" class="mx-auto text-center"><strong><img [src]="Country.img" width=200 height=100></strong><br><br>
+        <span style="text-align: center !important;" class="Destination-Name mx-auto">&nbsp;<b>{{Country.CountryName | titlecase}}</b></span></a>
+    </agm-info-window>
+    
+  </agm-marker>
+  
+  <agm-circle [latitude]="lat + 0.3" [longitude]="lng" 
+      [radius]="5000"
+      [fillColor]="'red'"
+      [circleDraggable]="true"
+      [editable]="true">
+  </agm-circle>
+
+</agm-map>
+<div class="container-fluid destination-label">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3  class="destination-header Destination-title-in-country pt-2">{{'CountriesInDestination.DESTINATION IN' | translate}} {{DestinationTitle | uppercase}}</h3>
+        </div>
+    </div>
+</div>
+</div>
+<div class="container-fluid p-0 ">
+  <div class="bg_img_desti" [style.background-image]="'url(' + (Destination.img) + ')'">
+    <div class=" pb-5 pt-2 bg-grad">
+    <div class="container ">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pl-0" style="background: transparent;">
+          <li class="breadcrumb-item"><a routerLink="/" class="brea_cr_link">{{'countries-in-destinations.HOME' | translate}}</a></li>
+          <li class="breadcrumb-item"><a routerLink="/destinations" class="brea_cr_link">{{'countries-in-destinations.DESTINATION' | translate}}</a></li>
+          <li class="breadcrumb-item"><a href="#" class="brea_cr_link">{{'countries-in-destinations.DESTINATION TITLE IN' | translate}} {{DestinationTitle | uppercase}}</a></li>
+        </ol>
+      </nav>
+      <div class="row">
+        <div class="col-lg-12 ">
+             <p class="para_desti">{{DestinationDescription | uppercase}}</p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+<div class="container py-3">
+  <h3 class="title"><i class="fa fa-map-marker pr-3"></i>{{'CountriesInDestination.DESTINATION IN' | translate}} {{DestinationTitle | uppercase}}</h3>
+  <hr>
+  <div class="row">
+    <div class="col-lg-3 sho text-center" *ngFor="let Country of CountryData">
+      <div class="content rounded-lg">
+        <a routerLink="/countries" (click)="StoreCountryDetailsInLocalStorage(Country)" href="javascript:void(0)">
+          <div class="content-overlay"></div>
+          <img class="content-image"  src="{{this.env.apiUrl}}{{Country.CountryImage}}">
+          <div class="content-details fadeIn-bottom d-flex justify-content-center align-items-center">
+            <div class="text-center pr-3 text-white">
+              <h4>12</h4>
+              <h4>TRAVEL</h4>
+            </div>
+<hr style="height: 80px;">
+            <div class="text-center pl-3 text-white">
+              <h4>0</h4>
+              <h4>OFFER</h4>
+            </div>
+            
+            <!-- <p class="content-text">This is a short description</p> -->
+          </div>
+        </a>
+      </div>
+      <figcaption><h5>{{Country.CountryName}}</h5></figcaption>
+    </div>
+
+ 
+    <!-- <div class="col-lg-3 sho text-center" >
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="{{this.env.apiUrl}}{{CountryImage}}">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+      <figcaption><h5>ETIOPÍA</h5></figcaption>
+    </div> -->
+
+    <!-- <div class="col-lg-3 sho text-center">
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+      <figcaption><h5>KENIA</h5></figcaption>
+    </div> -->
+    <!-- <div class="col-lg-3 sho text-center">
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+      <figcaption><h5>MADAGASCAR</h5></figcaption>
+    </div> -->
+    <!-- <div class="col-lg-3 sho text-center">
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+      <figcaption><h5>NAMIBIA</h5></figcaption>
+    </div> -->
+
+    <!-- <div class="col-lg-3 sho text-center">
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+      <figcaption><h5>SENEGAL</h5></figcaption>
+    </div> -->
+
+    <!-- <div class="col-lg-3 sho text-center">
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+      <figcaption><h5>SUDÁFRICA</h5></figcaption>
+    </div> -->
+
+    <!-- <div class="col-lg-3 sho text-center">
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+      <figcaption><h5>TANZANIA</h5></figcaption>
+    </div> -->
+
+    <!-- <div class="col-lg-3 sho text-center">
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+      <figcaption><h5>UGANDA</h5></figcaption>
+    </div> -->
+
+    <!-- <div class="col-lg-3 sho text-center">
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+      <figcaption><h5>ZAMBIA</h5></figcaption>
+    </div> -->
+
+    <!-- <div class="col-lg-3 sho text-center">
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+    </div> -->
+  </div>
+</div>
+<!-- <h3> Destination Id ={{Destination.Id}}</h3> -->
+<app-footer></app-footer>

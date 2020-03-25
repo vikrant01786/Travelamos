@@ -1,0 +1,113 @@
+<!-- <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">  -->
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<app-header></app-header>
+
+
+<!-- BODY OF DESTINATIONS -->
+<div id="map">
+    <agm-map
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [disableDefaultUI]="false"
+  [zoomControl]="false">
+  <!-- (mapClick)="mapClicked($event)" -->
+
+  <agm-marker
+      *ngFor="let Destination of markers; let i = index"
+      (mouseOver)="onMouseOver(infoWindow, $event)"
+      [latitude]="Destination.lat"
+      [longitude]="Destination.lng"
+      [label]="Destination.label"
+      [markerDraggable]="Destination.draggable"
+      >
+      <!-- (dragEnd)="markerDragEnd(m, $event)" -->
+
+      <agm-info-window [disableAutoPan]="false" #infoWindow>
+        <a (click)="ShowCountriesWhenClickedOnMarker(Destination)" class="mx-auto"><strong><img [src]="Destination.img" width=200 height=100></strong><br><br>
+          <span class="Destination-Name">&nbsp;<b>{{Destination.DestinationName | titlecase}}</b></span></a>
+      </agm-info-window>
+
+  </agm-marker>
+
+  <agm-circle [latitude]="lat + 0.3" [longitude]="lng"
+      [radius]="5000"
+      [fillColor]="'red'"
+      [circleDraggable]="true"
+      [editable]="true">
+  </agm-circle>
+
+</agm-map>
+  </div>
+  <div class="container-fluid label-destination">
+      <div class="container">
+      <div class="row">
+          <div class="col-lg-12 pt-2">
+            <h3 class="destination-header Destination-title-in-country pt-2">{{'Destination.All Destinations' | translate}}</h3>
+          </div>
+      </div>
+
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3 text-center" *ngFor="let Destination of DestinationData">
+      <div class="content rounded-lg" >
+        <a href="javascript:void(0)" (click)="ShowCountriesWhenClickedOnImage(Destination)">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="{{this.env.apiUrl}}{{Destination.DestinationImage}}">
+          <div class="content-details fadeIn-bottom"  *ngFor="let Count of countryCount">
+            <h3 class="content-title">{{Count.Count}}</h3>
+            <h3>Travel</h3>
+          </div>
+        </a>
+      </div>
+      <figcaption><h5>{{Destination.DestinationName}}</h5></figcaption>
+    </div>
+    
+
+    <!-- <div class="col-lg-3">
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-lg-3">
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-lg-3">
+      <div class="content">
+        <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+          <div class="content-overlay"></div>
+          <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+          <div class="content-details fadeIn-bottom">
+            <h3 class="content-title">This is a title</h3>
+            <p class="content-text">This is a short description</p>
+          </div>
+        </a>
+      </div>
+    </div> -->
+  </div>
+
+</div>
+  <br>
+<app-footer></app-footer>

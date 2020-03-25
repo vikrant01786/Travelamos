@@ -1,0 +1,158 @@
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->
+<ngx-spinner bdColor="#af00ff" size="large" color="#fff" type="line-scale-pulse-out">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="container" style="background-image: url('assets/images/background.jpg');">
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <h1 class="text-white"><b><i class="fa fa-plane"></i>&nbsp;Languages</b></h1>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header destination-head"><i class="fa fa-plane"></i>&nbsp;Languages Lists</div>
+        <div class="card-body destination-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <button type="button" (click)="resetData(languagesForm)" class="btn btn1 btn-sm" data-toggle="modal"
+                data-target="#myModal"><i class="fa fa-plus"></i>&nbsp;Add New Language</button>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-12">
+              <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                class="table-responsive row-border hover">
+                <thead class="bg-primary text-white">
+                  <tr style="white-space:nowrap;">
+                    <th>Sl No</th>
+                    <th>Language Name</th>
+                    <th>Language Value</th>
+                    <th>CreatedOn</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let Languages of languagesData; index as i" class="text-center">
+                    <td>{{i+1}}</td>
+                    <td>{{Languages.LanguageName}}</td>
+                    <td><button type="button" class="btn btn-primary">
+                       <span class="badge badge-light">{{Languages.LanguageValue}}</span>
+                    </button></td>
+                    <td>{{Languages.CreatedOn | date: 'short'}}</td>
+                    <td style="display:inline-flex">
+                      <span style="margin-top:16px; color:crimson;"  *ngIf="Languages.LanguageValue =='En'"><b>Default English</b></span>
+                      <button *ngIf="Languages.LanguageValue !='En'" class="btn btn-danger  btn-xs" (click)="sendLanguagesDetailsToModalPopUp(Languages);"
+                        data-toggle="modal" data-target="#DeleteModal"><i class="ti-trash"></i></button>
+                      <button  *ngIf="Languages.LanguageValue !='En'" class="btn btn-primary  btn-xs" (click)="editLanguages(Languages)" data-toggle="modal"
+                        data-target="#myModal"><i class="ti-pencil-alt"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--container ends -->
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+      <form #languagesForm="ngForm">
+        <div class="modal-header destination-header text-center"
+          style="background-image: url('assets/images/background.jpg');">
+          <h4 class="modal-title text-white"><i class="fa fa-plane"></i>&nbsp;Add New Languages</h4>
+          <button type="button" (click)="resetData(languagesForm)" class="close text-white cross-button"
+            data-dismiss="modal">&times;</button>
+        </div>
+        <br>
+        <br>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <!-- form data -->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Language Name</span>
+                </div>
+                <input type="text" name="LanguageName" [(ngModel)]="languages.LanguageName"
+                  class="form-control input-box" placeholder="Language Name">
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <!-- form data -->
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Language Value(Code)</span>
+                </div>
+                <input type="text" name="LanguageValue" [(ngModel)]="languages.LanguageValue"
+                  class="form-control input-box" placeholder="Language Value">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary my-button btn-lg darkblue"
+            (click)="saveLanguages(languagesForm)" data-dismiss="modal"><span
+              class="ti-save-alt"></span>&nbsp;Save</button>
+          <button type="reset" class="btn btn-info reset-button btn-lg blue"><span
+              class="ti-control-shuffle"></span>&nbsp;Reset</button>
+          <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetData(languagesForm)"
+            data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- The Delete Modal -->
+<div class="modal fade" id="DeleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content deletemodal-country">
+
+      <!-- Delete Modal Header -->
+      <div class="modal-header" style="background-image: url('assets/images/background.jpg');">
+        <h4 class="modal-title delete-title text-white">Delete</h4>
+
+        <button type="button" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body delete-body text-center">
+        <b><i class="ti-alert"></i>&nbsp;Are You Sure You Want To Delete
+          &nbsp;&nbsp;?</b>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer mx-auto">
+        <button type="button" (click)="deleteLanguages(languagesDetails)" data-dismiss="modal"
+          class="btn btn-success btn-sm all-button" data-dismiss="modal"><i class="ti ti-trash"></i>&nbsp;Yes</button>
+        <button type="button" class="btn btn-danger btn-sm all-button " data-dismiss="modal"><i
+            class="ti ti-close"></i>&nbsp;No</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->

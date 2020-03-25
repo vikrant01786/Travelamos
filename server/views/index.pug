@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  .container
+    .row.bg-grey.pt-5
+      .col
+        .jumbotron.text-center.myback.bg-primary
+          h1.text-white.text-center.mytext.text-white Welcome To Express
+          p.text-center This Is Express Server Running..!!
+          button.btn.mybutton.btn-success(type="button" data-toggle="collapse" data-target="#myju") Click to see
+    #myju.collapse
+      .row
+        .col
+          .jumbotron.myback.bg-primary
+            h1.text-white.text-center.mytext.text-white Connect To Your Angular App
+            p.text-center Angular App..!!

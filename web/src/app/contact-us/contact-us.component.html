@@ -1,0 +1,50 @@
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<app-header></app-header>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col p-0">
+            <img src="assets/images/contactus.jpg" width="100%">
+        </div>
+    </div>
+</div>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <h2><mark>GET IN TOUCH</mark></h2>
+        </div>
+    </div>
+    <form #contactForm="ngForm">
+        <div class="row ">
+            <div class="col-sm-6 mt-4" id="fields">
+                <label for="field1">
+                    <input id="field1" type="text" name="FirstName" [(ngModel)]="contactUS.FirstName" required/>
+                    <span class="text">YOUR FIRST NAME</span>
+                </label>
+            </div>
+            <div class="col-sm-6 mt-4" id="fields">
+                <label for="field2">
+                    <input id="field2" type="text" name="LastName" [(ngModel)]="contactUS.LastName" required/>
+                    <span class="text">YOUR LAST NAME</span>
+                </label>
+            </div>
+            <div class="col-12 mt-4" id="fields">
+                <label for="field3">
+                    <input id="field3" class="f4" type="text" name="Email" [(ngModel)]="contactUS.Email" required/>
+                    <span class="text">YOUR EMAIL ADDRESS</span>
+                </label>
+            </div>
+            <div class="col-12 mt-4" id="fields">
+                <label for="field4">
+                    <input id="field4" class="f3" type="text" name="Subject" [(ngModel)]="contactUS.Subject" required/>
+                    <span class="text">YOUR SUBJECT</span>
+                </label>
+            </div>
+            <div class="col-12 mt-4" id="fields">
+                <textarea class="w-100" style="height: 300px;" name="Message" [(ngModel)]="contactUS.Message" required></textarea>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6 mt-4">
+                <a href="javascript:void(0)" (click)="SendEmail(contactForm)" class="btn btn-sm animated-button thar-one">SEND</a> </div>
+        </div>
+    </form>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,529 @@
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->
+<ngx-spinner bdColor="#af00ff" size="large" color="#fff" type="line-scale-pulse-out">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="container" style="background-image: url('assets/images/background.jpg');">
+  <div class="row">
+      <div class="col-lg-12 text-center">
+          <h1 class="text-white"><b><i class="fa fa-globe"></i>&nbsp;Tour</b></h1>
+      </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+      <div class="col-lg-12">
+  <div class="card">
+      <div class="card-header country-head"><i class="fa fa-globe"></i>&nbsp;Tour List</div>
+      <div class="card-body country-body">
+          <div class="row">
+              <div class="col-lg-6">
+                  <button type="button" (click)="resetData(tourForm)" class="btn btn1 btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>&nbsp;Add New Tour</button>
+              </div>
+              <div class="col-lg-3 text-right">
+                <select class="form-control  input-box rounded-1"  #Languagebox (change)="DisplayTourAccordingToLang(Languagebox.value);">
+                    <option value="EN">English</option>
+                    <option *ngFor="let Language of languages" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                </select>
+           </div>
+           <div class="col-lg-3">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
+                <input type="text" class="form-control input-box" [(ngModel)]="term" placeholder="Search...">
+              </div>
+           
+           </div>
+          </div>
+          <br>
+          <div class="row">
+              <div class="col-lg-12 col-md-12">
+                  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-responsive row-border hover">
+                      <thead class="bg-primary text-white">
+                          <tr style="white-space:nowrap;">
+                              <th>Sl No</th>
+                              <th>Add More Language</th>
+                              <th>Country</th>
+                              <th>City</th>
+                              <th>TourTitle</th>
+                              <th>TourLocation</th>
+                              <th>Description</th>
+                              <th>TourPackages</th>
+                              <th>SeasonStartDate</th>
+                              <th>SeasonEndDate</th>
+                              <th>DurationInDays</th>
+                              <th>DurationInNights</th>
+                              <th>TourProgram</th>
+                              <th>Display Status</th>
+                              <th>Flight Included</th>
+                              <th>Language</th>
+                              <th>CreatedOn</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let Tour of tourData | filter:term; index as i" class="text-center">
+                              <td>{{i+1}}</td>
+                              <td>
+                                  <button *ngIf="Tour.LanguageValue === 'EN'" class="btn btn-info btn-xs" (click)="GetDetailsOfTour(Tour)" data-toggle="modal" data-target="#AddMoreLanguage"><i class="fa fa-plus"></i>Add More Language</button>
+                              </td>
+                              <td>{{Tour.CountryName |titlecase}}</td>
+                              <td>{{Tour.CityName=== null || Tour.CityName === ''? '--':Tour.CityName |titlecase}}</td>
+                              <td>{{Tour.TourTitle === null || Tour.TourTitle === ''? '--':Tour.TourTitle |titlecase}}</td>
+                              <td>{{Tour.TourLocation ===null || Tour.TourLocation === ''? '--':Tour.TourLocation |titlecase}}</td>
+                              <td class="Description">{{Tour.TourDescription === null || Tour.TourDescription === ''? '--':Tour.TourDescription |titlecase}}</td>
+                              <td>{{Tour.PackageName === null || Tour.PackageName === ''? '--':Tour.PackageName |titlecase}}</td>
+                              <td>{{Tour.SeasonStartDate ===null || Tour.SeasonStartDate === ''? '--':Tour.SeasonStartDate |date: 'medium'}}</td>
+                              <td>{{Tour.SeasonEndDate === null || Tour.SeasonEndDate === ''? '--':Tour.SeasonEndDate |date: 'medium'}}</td>
+                              <td>{{Tour.DurationInDays === 0 || Tour.DurationInDays === '' || Tour.DurationInDays === null? '--':Tour.DurationInDays + '-Days'}}</td>
+                              <td>{{Tour.DurationInNights === 0 || Tour.DurationInNights === ''? '--': Tour.DurationInNights + '-Days'}}</td>
+                              <td>{{Tour.Title}}</td>
+                              <td *ngIf="Tour.FrontPage === 1"><span class="text-success"><b><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;Active</b></span></td>
+                              <td *ngIf="Tour.FrontPage=== 0"><span class="text-coloring"><b><i class="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;Disabled</b></span></td>
+                              <td *ngIf="Tour.FlightIncluded === 1"><span class="text-primary"><b><i class="fa fa-plane" aria-hidden="true"></i>&nbsp;Flight Included</b></span></td>
+                              <td *ngIf="Tour.FlightIncluded === 0"><span class="text-warning"><b><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;Flight Not Included</b></span></td>
+                              <td style="color:red"><b>{{Tour.LanguageValue === 'EN'? 'English':Tour.LanguageName}}</b></td>
+                              <td>{{Tour.CreatedOn | date: 'medium'}}</td>
+                              <td style="display:inline-flex">
+                                  <button class="btn btn-danger btn-xs" title="Delete Tour" (click)="sendTourDetailsToModalPopUp(Tour);" data-toggle="modal" data-target="#DeleteModal"><i class="ti-trash"></i></button>
+                                  <button *ngIf="Tour.LanguageValue ==='EN'"  class="btn btn-primary btn-xs" title="Edit Tour" (click)="editTour(Tour)" data-toggle="modal" data-target="#myModal"><i class="ti-pencil-alt"></i></button>
+                                  <button *ngIf="Tour.LanguageValue !=='EN'" class="btn btn-primary btn-xs" title="Edit Tour" (click)="editTourNewOption(Tour)" data-toggle="modal" data-target="#AddMoreLanguage"><i class="ti-pencil-alt"></i></button>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+</div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+          <form #tourForm="ngForm">
+              <div class="modal-header destination-header text-center"  style="background-image: url('assets/images/background.jpg');">
+                  <h4 class="modal-title text-white"><i class="fa fa-globe"></i>&nbsp;Add New Tour</h4>
+                  <button type="button"  class="close text-white cross-button" data-dismiss="modal">&times;</button>
+              </div>
+              <br>
+              <br>
+              <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details In English</b></span></h4>
+                    </div>
+                </div><br>
+                  <div class="row">
+                      <div class="col-lg-6">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text ">Country </span>
+                              </div>
+                              <select class="form-control input-box" #countryBox= "ngModel" [class.is-invalid]="countryBox.invalid && countryBox.touched" name="CountryID" #CountryTextBox (ngModelChange)="GetCountryLocationIDInFirstModal($event)" [(ngModel)]="tour.CountryID" required>
+                                  <option value="" selected disabled>Select Country</option>
+                                  <option *ngFor="let Country of countryData" value="{{Country.Id}}">{{Country.CountryName | titlecase}}</option>
+                              </select>
+                          </div>
+                          <div class="text-center " *ngIf="countryBox.errors && (countryBox.invalid && countryBox.touched)">
+                            <small class=" error-mesg" *ngIf="countryBox?.errors.required"><b>Please Select Country Field**</b></small>
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">City</span>
+                              </div>
+                              <select class="form-control input-box" #cityBox="ngModel" [class.is-invalid]="cityBox.invalid && cityBox.touched" name="CityID" #CityTextBox (ngModelChange)="GetCityLocationIDByCityIDInFirstModal($event)" [(ngModel)]="tour.CityID" required>
+                                  <option value="">Select City</option>
+                                  <option *ngFor="let City of cityData" value="{{City.Id}}">{{City.CityName | titlecase}}</option>
+                              </select>
+                          </div>
+                          <div class="text-center " *ngIf="cityBox.errors && (cityBox.invalid && cityBox.touched)">
+                            <small class=" error-mesg" *ngIf="cityBox?.errors.required"><b>Please Select City Field**</b></small>
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+                  <br> 
+                  <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Tour Package</span>
+                            </div>
+                            <select class="form-control input-box" #tourPackageBox="ngModel" [class.is-invalid]="tourPackageBox.invalid && tourPackageBox.touched"  name="TourPackageID" #TourPackageBox (ngModelChange)="GetTourPackagesLocationIDByTourPackageID($event)" [(ngModel)]="tour.TourPackageID" required>
+                                <option value="">Select Tour Package</option>
+                                <option *ngFor="let TourPackage of tourPackagesData" value="{{TourPackage.Id}}">{{TourPackage.PackageName| titlecase}}</option>
+                            </select>
+                        </div>
+                        <div class="text-center " *ngIf="tourPackageBox.errors && (tourPackageBox.invalid && tourPackageBox.touched)">
+                          <small class=" error-mesg" *ngIf="tourPackageBox?.errors.required"><b>Please Select Tour Package Field**</b></small>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Tour Program </span>
+                            </div>
+                            <select class="form-control input-box" #tourProgramBox="ngModel" [class.is-invalid]="tourProgramBox.invalid && tourProgramBox.touched" name="TourProgramID" #TourProgramTextBox (ngModelChange)="GetTourProgramLocationIDByTourProgramID($event)" [(ngModel)]="tour.TourProgramID" required>
+                                <option value="">Select Tour Program</option>
+                                <option *ngFor="let TourProgram of tourProgramData" value="{{TourProgram.Id}}">{{TourProgram.Title |titlecase}}</option>
+                            </select>
+                        </div>
+                        <div class="text-center " *ngIf="tourProgramBox.errors && (tourProgramBox.invalid && tourProgramBox.touched)">
+                          <small class=" error-mesg" *ngIf="tourProgramBox?.errors.required"><b>Please Select Tour Program Field**</b></small>
+                        </div>
+                    </div>
+                  </div><br><br>
+                  <div class="row">
+                      <div class="col-lg-6">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Tour Title</span>
+                              </div>
+                              <input type="text" name="TourTitle" [(ngModel)]="tour.TourTitle" class="form-control input-box" placeholder="Tour Title ">
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Tour Location</span>
+                            </div>
+                            <input type="text" name="TourLocation" [(ngModel)]="tour.TourLocation" class="form-control input-box" placeholder="Tour Location">
+                        </div> 
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="row">
+                      <div class="col-lg-6">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Season Start Date</span>
+                              </div>
+                              <input type="date" name="SeasonStartDate" [(ngModel)]="tour.SeasonStartDate" class="form-control input-box">
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Season End Date</span>
+                            </div>
+                            <input type="date" name="SeasonEndDate" [(ngModel)]="tour.SeasonEndDate" class="form-control input-box">
+                        </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="row">
+                      <div class="col-lg-6">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Duration In Days</span>
+                              </div>
+                              <input type="number" name="DurationInDays" [(ngModel)]="tour.DurationInDays" class="form-control input-box" placeholder="Duration In Days">
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Duration In Nights</span>
+                            </div>
+                            <input type="number" name="DurationInNights" [(ngModel)]="tour.DurationInNights" class="form-control input-box" placeholder="Duration In Nights">
+                        </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+              
+             
+                  <div class="row">
+                      <div class="col-lg-12 text-center">
+                        <label><b>Tour Description</b></label>
+                        <textarea name="TourDescription" [(ngModel)]="tour.TourDescription" class="form-control input-box"></textarea>
+                      </div>
+                  </div><br><br>
+                  <div class="row">
+                    <div class="col-lg-3  mx-auto">
+                      <div class="input-group mb-3 ">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">Front Page &nbsp;
+                              <div class="form-check-inline">
+                                  <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" [(ngModel)]="tour.FrontPage" name="FrontPage">
+                                  </label>
+                                </div>
+                          </span>
+                      </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 mx-auto ">
+                      <div class="input-group mb-3 ">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">Flights Included &nbsp;
+                              <div class="form-check-inline">
+                                  <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" [(ngModel)]="tour.FlightIncluded" name="FlightIncluded">
+                                  </label>
+                                </div>
+                          </span>
+                      </div>
+                        </div>
+                    </div>
+                  </div><br><br>
+              </div>
+              <div class="modal-footer">
+                  <button type="submit" [disabled]="tourForm.invalid" class="btn btn-primary my-button btn-lg darkblue" (click)="saveTour(tourForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+                  <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+                  <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetData(tourForm)" data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+<!-- Add More Language Modal Starts -->
+<div id="AddMoreLanguage" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+  
+        <!-- Modal content-->
+        <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+            <form #tourFormNewOption="ngForm">
+                <div class="modal-header destination-header text-center"  style="background-image: url('assets/images/background.jpg');">
+                    <h4 class="modal-title text-white"><i class="fa fa-globe"></i>&nbsp;Add New Tour</h4>
+                    <button type="button" (click)="resetTourNewOptionForm(tourFormNewOption)"  class="close text-white cross-button" data-dismiss="modal">&times;</button>
+                </div>
+                <br>
+                <br>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                          <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details According To Selected Language</b></span></h4>
+                        </div>
+                    </div><br>
+                  <div class="row">
+                      <div class="col-lg-8 mx-auto">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Select Language</span>
+                            </div>
+                           <select class="form-control input-box" #LanguageTextBox name="LanguageValue" #language="ngModel" [class.is-invalid]="language.invalid && language.touched" [(ngModel)]="tourNewOption.LanguageValue"  (change)="ChangeLabels(LanguageTextBox.value);" required>
+                               <option value="" selected disabled>Select Language</option>
+                               <option *ngFor="let Language of languagesData" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                           </select>
+                           
+                        </div>
+                        <div class="text-center " *ngIf="language.errors && (language.invalid && language.touched)">
+                            <small class=" error-mesg" *ngIf="language?.errors.required"><b>Please Select Language Field**</b></small>
+                          </div>
+                      </div>
+                     
+                  </div><br><br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text ">Country </span>
+                                </div>
+                                <select class="form-control input-box" #countryBox= "ngModel" [class.is-invalid]="countryBox.invalid && countryBox.touched" name="CountryID" #CountryTextBox (ngModelChange)="GetCountryLocationIDInFirstModal($event)" [(ngModel)]="tourNewOption.CountryID" required>
+                                    <option value="" selected disabled>Select Country</option>
+                                    <option *ngFor="let Country of CountryListData" value="{{Country.Id}}">{{Country.CountryName | titlecase}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="countryBox.errors && (countryBox.invalid && countryBox.touched)">
+                              <small class=" error-mesg" *ngIf="countryBox?.errors.required"><b>Please Select Country Field**</b></small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">City</span>
+                                </div>
+                                <select class="form-control input-box" #cityBox="ngModel" [class.is-invalid]="cityBox.invalid && cityBox.touched" name="CityID" #CityTextBox (ngModelChange)="GetCityLocationIDByCityIDInFirstModal($event)" [(ngModel)]="tourNewOption.CityID" required>
+                                    <option value="">Select City</option>
+                                    <option *ngFor="let City of cityData" value="{{City.Id}}">{{City.CityName | titlecase}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="cityBox.errors && (cityBox.invalid && cityBox.touched)">
+                              <small class=" error-mesg" *ngIf="cityBox?.errors.required"><b>Please Select City Field**</b></small>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br> 
+                    <div class="row">
+                      <div class="col-lg-6">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Tour Package</span>
+                              </div>
+                              <select class="form-control input-box" #tourPackageBox="ngModel" [class.is-invalid]="tourPackageBox.invalid && tourPackageBox.touched"  name="TourPackageID" #TourPackageBox (ngModelChange)="GetTourPackagesLocationIDByTourPackageID($event)" [(ngModel)]="tourNewOption.TourPackageID" required>
+                                  <option value="">Select Tour Package</option>
+                                  <option *ngFor="let TourPackage of tourPackagesData" value="{{TourPackage.Id}}">{{TourPackage.PackageName| titlecase}}</option>
+                              </select>
+                          </div>
+                          <div class="text-center " *ngIf="tourPackageBox.errors && (tourPackageBox.invalid && tourPackageBox.touched)">
+                            <small class=" error-mesg" *ngIf="tourPackageBox?.errors.required"><b>Please Select Tour Package Field**</b></small>
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Tour Program </span>
+                              </div>
+                              <select class="form-control input-box" #tourProgramBox="ngModel" [class.is-invalid]="tourProgramBox.invalid && tourProgramBox.touched" name="TourProgramID" #TourProgramTextBox (ngModelChange)="GetTourProgramLocationIDByTourProgramID($event)" [(ngModel)]="tourNewOption.TourProgramID" required>
+                                  <option value="">Select Tour Program</option>
+                                  <option *ngFor="let TourProgram of tourProgramData" value="{{TourProgram.Id}}">{{TourProgram.Title |titlecase}}</option>
+                              </select>
+                          </div>
+                          <div class="text-center " *ngIf="tourProgramBox.errors && (tourProgramBox.invalid && tourProgramBox.touched)">
+                            <small class=" error-mesg" *ngIf="tourProgramBox?.errors.required"><b>Please Select Tour Program Field**</b></small>
+                          </div>
+                      </div>
+                    </div><br><br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Tour Title</span>
+                                </div>
+                                <input type="text" name="TourTitle" [(ngModel)]="tourNewOption.TourTitle" class="form-control input-box" placeholder="Tour Title ">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Tour Location</span>
+                              </div>
+                              <input type="text" name="TourLocation" [(ngModel)]="tourNewOption.TourLocation" class="form-control input-box" placeholder="Tour Location">
+                          </div> 
+                      </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Season Start Date</span>
+                                </div>
+                                <input type="date" name="SeasonStartDate" [(ngModel)]="tourNewOption.SeasonStartDate" class="form-control input-box">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Season End Date</span>
+                              </div>
+                              <input type="date" name="SeasonEndDate" [(ngModel)]="tourNewOption.SeasonEndDate" class="form-control input-box">
+                          </div>
+                      </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Duration In Days</span>
+                                </div>
+                                <input type="number" name="DurationInDays" [(ngModel)]="tourNewOption.DurationInDays" class="form-control input-box" placeholder="Duration In Days">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Duration In Nights</span>
+                              </div>
+                              <input type="number" name="DurationInNights" [(ngModel)]="tourNewOption.DurationInNights" class="form-control input-box" placeholder="Duration In Nights">
+                          </div>
+                      </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                          <label><b>Tour Description</b></label>
+                          <textarea name="TourDescription" [(ngModel)]="tourNewOption.TourDescription" class="form-control input-box"></textarea>
+                        </div>
+                    </div><br><br>
+                    <div class="row">
+                      <div class="col-lg-3  mx-auto">
+                        <div class="input-group mb-3 ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Front Page &nbsp;
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                      <input type="checkbox" class="form-check-input" [(ngModel)]="tourNewOption.FrontPage" name="FrontPage">
+                                    </label>
+                                  </div>
+                            </span>
+                        </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-3 mx-auto ">
+                        <div class="input-group mb-3 ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Flights Included &nbsp;
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                      <input type="checkbox" class="form-check-input" [(ngModel)]="tourNewOption.FlightIncluded" name="FlightIncluded">
+                                    </label>
+                                  </div>
+                            </span>
+                        </div>
+                          </div>
+                      </div>
+                    </div><br><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" [disabled]="tourFormNewOption.invalid" class="btn btn-primary my-button btn-lg darkblue" (click)="saveTourNewOption(tourFormNewOption)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+                    <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+                    <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetTourNewOptionForm(tourFormNewOption)" data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+<!-- Add More Language Modal Ends -->
+
+<!-- The Delete Modal -->
+<div class="modal fade" id="DeleteModal">
+  <div class="modal-dialog">
+      <div class="modal-content deletemodal-country">
+
+          <!-- Delete Modal Header -->
+          <div class="modal-header" style="background-image: url('assets/images/background.jpg');">
+              <h4 class="modal-title delete-title text-white">Delete</h4>
+              <button type="button" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body delete-body text-center">
+              <b><i class="ti-alert"></i>&nbsp;Are You Sure You Want To Delete &nbsp;<b><span class="text-primary">{{tourDetails.TourTitleInEnglish | titlecase}}</span></b>&nbsp;?</b>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer mx-auto">
+              <button type="button" (click)="deleteTour(tourDetails)" data-dismiss="modal" class="btn btn-success btn-sm all-button "><i class="ti ti-trash"></i>&nbsp;Yes</button>
+              <button type="button" class="btn btn-danger btn-sm all-button " data-dismiss="modal"><i class="ti ti-close"></i>&nbsp;No</button>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->

@@ -1,0 +1,73 @@
+{
+    "Header": {
+        "Home": "Accueil",
+        "Destination": "toutes les destinations",
+        "Tours": "Circuits",
+        "Contact Us": "Nous contacter",
+        "Where :": "Où :",
+        "Find Tours": "Trouver des circuits",
+        "All Destinations": "Toutes les destinations",
+        "Tours & Activities": "Visites et activités",
+        "Holidays": "Vacances",
+        "Special Offers": "Offres spéciales",
+        "Days": "Journées",
+        "Nights": "Nuits"
+        
+    },
+    "Footer": {
+        "Tour Agency": "agence de voyages",
+        "Book Now": "Reserve maintenant",
+        "Design": "Conception",
+        "Fashion": "Mode",
+        "Music": "La musique",
+        "Top Deals": "Meilleures offres",
+        "Blog posts": "Articles de blog",
+        "Travel with us this year": "Voyagez avec nous cette année",
+        "New destinations for you": "De nouvelles destinations pour vous",
+        "Contact Info": "Informations de contact",
+        "Electronic Complex": "Complexe électronique",
+        "All rights reserved": "Tous les droits sont réservés",
+        "Copyright": "droits d'auteur"
+
+    },
+    "CountriesInDestination": {
+        "DESTINATION IN": "DESTINATION DANS"
+    },
+    "Destination":{
+        "All Destinations": "Toutes les destinations"
+    },
+    "Country": {
+        "SEE ALL THE TRIPS":"VOIR TOUS LES VOYAGES",
+        "TRAVELAMOS RECOMMENDS": "TRAVELAMOS RECOMMANDES",
+        "DISCOVER": "DÉCOUVRIR",
+        "START": "DÉBUT",
+        "TRAVELS": "VOYAGES",
+        "INFO": "INFO"
+    },
+    "countries-in-destinations":{
+        "HOME": "ACCUEIL",
+        "DESTINATION": "DESTINATION",
+        "DESTINATION TITLE IN": "TITRE DE DESTINATION"
+    },
+    "tours":{
+        "All Tour Packages": "Tous les voyages organisés",
+        "TourStaticText": "Vous ne savez toujours pas où aller? Nous concevons notre voyage en pensant à vous qui vous êtes et à toute la motivation qui peut vous amener à vouloir voyager.Ainsi, vous pouvez mieux trouver le voyage que vous recherchez, nous avons créé ces catégories et types de voyages.",
+        "Where do you want to go ?" : "Où veux-tu aller",
+        "SEARCH FOR": "RECHERCHER",
+        "SORT BY": "TRIER PAR",
+        "Lower Price": "Prix ​​Inférieur",
+        "Higher Price": "Prix ​​plus élevé",
+        "Shorter Duration": "Durée Plus Courte",
+        "Longer Duration": "Durée plus longue",
+        "See Trip": "Voir Voyage",
+        "Price From": "Prix ​​à Partir",
+        "DAYS": "JOURNÉES"
+    },
+    "Specific_tours":{
+        "ITINERARY": "ITINÉRAIRE",
+        "SERVICES":"PRESTATIONS DE SERVICE",
+        "OUR SERVICES":"NOS SERVICES",
+        "Day": "journée",
+        "Flights are not included. Would you like to book flights?": "Les vols ne sont pas inclus. Souhaitez-vous réserver des vols?"
+    }
+}

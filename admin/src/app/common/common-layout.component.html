@@ -1,0 +1,465 @@
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->
+<ngx-spinner bdColor="#af00ff" size="large" color="#fff" type="line-scale-pulse-out">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="app" [ngClass]="{'is-collapsed': isCollapse, 'rtl': rtlActived}">
+    <div class="layout" [ngClass]="headerSelected">
+        <div [ngClass]="sidenavSelected">
+            <!-- Side Nav START -->
+            <div class="side-nav" sideBar>
+                <b>
+                <div class="side-nav-inner">
+                    <div class="side-nav-logo">
+                        <a href="" [routerLink]="['/admin/dashboard']">
+                            <div class="logo logo-dark" style="background-image: url('assets/images/logo/logo.png')"></div>
+                            <div class="logo logo-white" style="background-image: url('assets/images/logo/logo-white.png')"></div>
+                        </a>
+                        <div class="mobile-toggle side-nav-toggle">
+                            <a (click)="toggleSideNavCollapse()" href="javascript:void(0);">
+                                <i class="ti-arrow-circle-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <ul class="side-nav-menu scrollable" style="background-image: url('assets/images/background.jpg');" [perfectScrollbar]>
+                        <li clas="nav-item" routerLinkActive="active">
+                            <a  style="cursor: pointer;" class="mrg-top-30"  routerLink="/admin/dashboard">
+                                <span class="icon-holder">
+                                    <i class="fa fa-tachometer fa-spin"></i>
+                                </span>
+                                <span class="title">Dashboard</span>
+                            </a>
+                        </li>
+                        <li clas="nav-item" routerLinkActive="active">
+                            <a  style="cursor: pointer;"  routerLink="/admin/languages">
+                                <span class="icon-holder">
+                                    <i class="fa fa-futbol-o fa-spin"></i>
+                                </span>
+                                <span class="title">Languages</span>
+                            </a>
+                        </li>
+                        <li clas="nav-item" routerLinkActive="active">
+                            <a  style="cursor: pointer;"  routerLink="/admin/logo">
+                                <span class="icon-holder">
+                                    <i class="fa fa-futbol-o fa-spin"></i>
+                                </span>
+                                <span class="title">Logo</span>
+                            </a>
+                        </li>
+                        <li clas="nav-item" routerLinkActive="active">
+                                <a  style="cursor: pointer;"  routerLink="/admin/header">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-header fa-spin"></i>
+                                    </span>
+                                    <span class="title">Header</span>
+                                </a>
+                            </li>
+                            <!-- <li clas="nav-item" routerLinkActive="active">
+                                <a  style="cursor: pointer;"  routerLink="/admin/slider">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-picture-o fa-spin"></i>
+                                    </span>
+                                    <span class="title">Slider</span>
+                                </a>
+                            </li> -->
+                            <!--city drop down starts-->
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-toggle" href="javascript:void(0);">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-location-arrow fa-spin"></i>
+                                    </span>
+                                    <span class="title">City</span>
+                                    <span class="arrow">
+                                        <i class="ti-angle-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item dropdown">
+                                        <a style="cursor:pointer" routerLink="/admin/city-details">
+                                                <span>
+                                                    <i class="ti-direction"></i>
+                                                    </span>&nbsp;
+                                            <span>City Details</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a style="cursor:pointer" routerLink="/admin/city-images">
+                                                <span>
+                                                        <i class="ti-direction"></i>
+                                                        </span>&nbsp;
+                                            <span>City Images</span>
+                                        </a>
+                                    </li>	               
+                                </ul>
+                            </li>
+                            <!-- city drop down ends-->
+                            <!-- hotel drop down starts-->
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-toggle" href="javascript:void(0);">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-bed fa-spin"></i>
+                                    </span>
+                                    <span class="title">Hotel</span>
+                                    <span class="arrow">
+                                        <i class="ti-angle-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item dropdown">
+                                        <a style="cursor:pointer" routerLink="/admin/hotel-details">
+                                                <span>
+                                                    <i class="ti-direction"></i>
+                                                    </span>&nbsp;
+                                            <span>Hotel Details</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a style="cursor:pointer" routerLink="/admin/hotel-images">
+                                                <span>
+                                                        <i class="ti-direction"></i>
+                                                        </span>&nbsp;
+                                            <span>Hotel Images</span>
+                                        </a>
+                                    </li>	               
+                                </ul>
+                            </li>
+                            <!-- hotel drop down ends-->
+                             <!--Tour Drop Down Starts Here-->
+                             <li class="nav-item dropdown">
+                                <a class="dropdown-toggle" href="javascript:void(0);">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-bus fa-spin"></i>
+                                    </span>
+                                    <span class="title">Tours</span>
+                                    <span class="arrow">
+                                        <i class="ti-angle-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item dropdown">
+                                        <a style="cursor:pointer" routerLink="/admin/tour-packages">
+                                                <span>
+                                                    <i class="ti-direction"></i>
+                                                    </span>&nbsp;
+                                            <span>Tour Type/Packages</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+
+                                        <a class="dropdown-toggle" href="javascript:void(0);">
+                                            <span class="icon-holder">
+                                                <i class="ti-direction"></i>
+                                            </span>&nbsp;
+                                            <span class="title">Tour Programs</span>
+                                            <span class="arrow">
+                                                <i class="ti-angle-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item dropdown">
+                                                <a style="cursor:pointer" routerLink="/admin/programs">
+                                                        <span>
+                                                            <i class="ti-direction"></i>
+                                                            </span>&nbsp;
+                                                    <span>Program</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item dropdown">
+                                                <a style="cursor:pointer" routerLink="/admin/program-days">
+                                                        <span>
+                                                            <i class="ti-direction"></i>
+                                                            </span>&nbsp;
+                                                    <span>Day</span>
+                                                </a>
+                                            </li>
+                                            </ul>
+
+
+
+
+
+                                        <!-- <a style="cursor:pointer" routerLink="/admin/tour-program">
+                                                <span>
+                                                        <i class="ti-direction"></i>
+                                                        </span>&nbsp;
+                                            <span>Tour Programs</span>
+                                        </a> -->
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a style="cursor:pointer" routerLink="/admin/tour">
+                                                <span>
+                                                        <i class="ti-direction"></i>
+                                                        </span>&nbsp;
+                                            <span>Tours</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a style="cursor:pointer" routerLink="/admin/tour-images">
+                                                <span>
+                                                        <i class="ti-direction"></i>
+                                                        </span>&nbsp;
+                                            <span>Tour Images</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a style="cursor:pointer" routerLink="/admin/tour-services">
+                                                <span>
+                                                        <i class="ti-direction"></i>
+                                                        </span>&nbsp;
+                                            <span>Tour Services</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a style="cursor:pointer" routerLink="/admin/tour-terms">
+                                                <span>
+                                                        <i class="ti-direction"></i>
+                                                        </span>&nbsp;
+                                            <span>Tour Terms</span>
+                                        </a>
+                                    </li>	               
+                                </ul>
+                            </li>
+                            <!-- Tour Drop Down Ends Here-->
+                            <!--Category drop down Starts-->
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-toggle" href="javascript:void(0);">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-money fa-spin"></i>
+                                    </span>
+                                    <span class="title">Categories</span>
+                                    <span class="arrow">
+                                        <i class="ti-angle-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item dropdown">
+                                        <a style="cursor:pointer" routerLink="/admin/category-details">
+                                                <span>
+                                                    <i class="ti-direction"></i>
+                                                    </span>&nbsp;
+                                            <span>Category Details</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a style="cursor:pointer" routerLink="/admin/price-category">
+                                                <span>
+                                                        <i class="ti-direction"></i>
+                                                        </span>&nbsp;
+                                            <span>Price Category</span>
+                                        </a>
+                                    </li>	               
+                                </ul>
+                            </li>
+                            <!--Category Drop Down Ends-->
+                            <!-- <li class="nav-item dropdown">
+                                    <a class="dropdown-toggle" href="javascript:void(0);">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-bars fa-spin"></i>
+                                        </span>
+                                        <span class="title">Footer</span>
+                                        <span class="arrow">
+                                            <i class="ti-angle-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item dropdown">
+                                            <a style="cursor:pointer" routerLink="/admin/footer-contact-info">
+                                                    <span>
+                                                        <i class="ti-direction"></i>
+                                                        </span>&nbsp;
+                                                <span>Contact Info</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item dropdown">
+                                            <a style="cursor:pointer" routerLink="/admin/footer-blog-posts">
+                                                    <span>
+                                                            <i class="ti-direction"></i>
+                                                            </span>&nbsp;
+                                                <span>Blog Post</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item dropdown">
+                                            <a style="cursor:pointer" routerLink="/admin/footer-description">
+                                                    <span>
+                                                            <i class="ti-direction"></i>
+                                                            </span>&nbsp;
+                                                <span>Footer Description</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item dropdown">
+                                            <a  style="cursor:pointer" routerLink="/admin/footer-tags">
+                                                    <span>
+                                                            <i class="ti-direction"></i>
+                                                            </span>&nbsp;
+                                                <span>Footer Tags</span>
+                                            </a>
+                                        </li>	
+
+                                    </ul>
+                                </li> -->
+                        <li clas="nav-item" routerLinkActive="active">
+                            <a  style="cursor: pointer;" routerLink="/admin/destination">
+                                <span class="icon-holder">
+                                    <i class="fa fa-plane fa-spin"></i>
+                                </span>
+                                <span class="title">Destination</span>
+                            </a>
+                        </li>
+                        <li clas="nav-item" routerLinkActive="active">
+                            <a  style="cursor: pointer;"  routerLink="/admin/destination-image">
+                                <span class="icon-holder">
+                                    <i class="fa fa-picture-o fa-spin"></i>
+                                </span>
+                                <span class="title">Destination-Images</span>
+                            </a>
+                        </li>
+                        <li clas="nav-item" routerLinkActive="active">
+                            <a  style="cursor: pointer;" routerLink="/admin/country">
+                                <span class="icon-holder">
+                                    <i class="fa fa-globe fa-spin"></i>
+                                </span>
+                                <span class="title">Country</span>
+                            </a>
+                        </li>
+                         <li clas="nav-item" routerLinkActive="active">
+                            <a  style="cursor: pointer;"  routerLink="/admin/country-image">
+                                <span class="icon-holder">
+                                    <i class="fa fa-picture-o fa-spin"></i>
+                                </span>
+                                <span class="title">Country-Images</span>
+                            </a>
+                        </li>
+                        <li clas="nav-item" routerLinkActive="active">
+                            <a  style="cursor: pointer;"  routerLink="/admin/country-attraction">
+                                <span class="icon-holder">
+                                    <i class="fa fa-picture-o fa-spin"></i>
+                                </span>
+                                <span class="title">Country-Attraction</span>
+                            </a>
+                        </li>
+                        <li clas="nav-item" routerLinkActive="active">
+                            <a style="cursor: pointer;"  (click)="authservice.logout();">
+                                <span class="icon-holder">
+                                    <i class="fa fa-power-off fa-spin"></i>
+                                </span>
+                                <span class="title">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </b>
+            </div>
+            <!-- Side Nav END -->
+            <!-- Page Container START -->
+            <div class="page-container">
+                <!-- Top Nav START -->
+                <div class="header navbar">
+                    <b>
+                    <div class="header-container"style="background-image: url('assets/images/background.jpg');">
+                        <ul class="nav-left">
+                            <li>
+                                <a class="side-nav-toggle text-white" (click)="toggleSideNavCollapse()" href="javascript:void(0);">
+                                    <i class="fa fa-th-large"></i>&nbsp;&nbsp;Menu
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav-right">
+                            <li class="user-profile dropdown">
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img class="profile-img img-fluid" src="assets/images/user.jpg">
+                                    <div class="user-info">
+                                        <span class="name pdd-right-5 text-white">Admin</span>
+                                        <i class="ti-angle-down text-white font-size-10"></i>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                            <a style="cursor: pointer;" routerLink="/admin/profile" >
+                                                <i class="ti-user pdd-right-10"></i><span>Profile</span>
+                                            </a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a style="cursor: pointer;" (click)="authservice.logout()">
+                                            <i class="fa fa-power-off pdd-right-10"></i>
+                                            <span>Logout</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    </b>
+                </div>
+                <!-- Top Nav END -->
+
+                <!-- Side Panel START -->
+                <div class="side-panel" [ngClass]="{'side-panel-open' : isOpen}">
+                    <div class="side-panel-wrapper bg-white">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#tab1" role="tab" data-toggle="tab">
+                                    <span>Tab 1</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tab2" role="tab" data-toggle="tab">
+                                    <span>Tab 2</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="#tab3" role="tab" data-toggle="tab">
+                                    <span>Tab 3</span>
+                                </a>
+                            </li>
+                            <li class="panel-close">
+                                <a class="side-panel-toggle" href="javascript:void(0);" (click)="toggleSidePanelOpen()">
+                                    <i class="ti-close"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab1" role="tabpanel" class="tab-pane fade in active">
+                            </div>
+                            <div id="tab2" role="tabpanel" class="tab-pane fade">
+                            </div>
+                            <div id="tab3" role="tabpanel" class="tab-pane fade">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Side Panel END -->
+                <!-- Content Wrapper START -->
+                <div class="main-content">
+                    <router-outlet></router-outlet>
+                </div>
+                <!-- Content Wrapper END -->
+                <!-- Footer START -->
+                <footer class="content-footer">
+                    <div class="footer">
+                        <div class="copyright">
+                            <span>Copyright © {{mydate | date: 'yyyy'}} <b class="text-dark">Navient Technology Pvt.Ltd</b>. All rights reserved &nbsp; | &nbsp;Designed & Developed By <a href="https://www.facebook.com/profile.php?id=100023062611339"><b class="text-dark">Vikrant Rana</b></a></span>
+                            <span class="go-right">
+                                <a href="" class="text-gray mrg-right-15">Term & Conditions</a>
+                                <a  href="" class="text-gray">Privacy & Policy</a>
+                            </span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Footer END -->
+            </div>
+            <!-- Page Container END -->
+        </div>
+    </div>
+</div>
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->

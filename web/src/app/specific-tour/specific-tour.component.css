@@ -1,0 +1,79 @@
+.specific-banner-bg{
+    /* background-image: url("http://localhost:50050/1581073154096_desierto-marruecos-0.jpg"); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  
+    height: 470px;
+    /* padding-top: 50px; */
+  }
+  .bottom-left {
+    position: absolute;
+    top: 408px;
+    left: 0;
+    width: 100%;
+    background-color: rgba(49, 18, 75, .5);
+    text-transform: uppercase;
+      font-family: bebas;
+      color: #fff;
+      padding: 15px 0px;
+      padding-left: 117px;
+  }
+  .h3_cls{
+    color: #ee9d1f;
+      text-align: center;
+  }
+  .h1_cls{
+    color: #ee9d1f;
+      text-align: center;
+  }
+  .prgrm_title{
+    color: #ee9d1f;
+      font-weight: bold;
+  }
+  hr{border: 1px solid gray;margin-top: 2px;}
+  .h2_clr{
+    color: gray;
+    font-family: bebas;
+  }
+  .country_name{
+    background-color: #000;
+    color: #fff;
+    padding: 5px;
+    display: inline-block;
+    margin-top: 10px;
+    text-transform: uppercase;
+  }
+  .mytable{
+    border:1px solid black !important;
+    font-family: bebas;
+  }
+  .table-bordered td, .table-bordered th {
+    border: 1px solid #000000 !important;
+}
+.table-hover tbody tr:hover {
+  color: #fff;
+  background-color:#ee9d1f !important;
+}
+
+.tourtitle{
+  text-transform: uppercase;
+}
+
+.nav-pills .nav-link.active {
+  color: rgba(54, 19, 84, 0.85) !important;
+  background-color: #fff !important;
+}
+
+.myLink{
+  font-size: 1rem;
+}
+
+.nav-item a{
+  color: gray;
+}
+
+.price-table {
+  background-color: rgba(54, 19, 84, 0.85);
+  color:white;
+}

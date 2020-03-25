@@ -1,0 +1,278 @@
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->
+<ngx-spinner bdColor="#af00ff" size="large" color="#fff" type="line-scale-pulse-out">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="container"  style="background-image: url('assets/images/background.jpg');">
+  <div class="row">
+      <div class="col-lg-12 text-center">
+          <h1 class="text-white"><b><i class="fa fa-picture-o"></i>&nbsp;Destination Images</b></h1>
+      </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+      <div class="col-lg-12">
+  <div class="card">
+      <div class="card-header country-head"><i class="fa fa-picture-o"></i>&nbsp;Destination Image List</div>
+      <div class="card-body country-body">
+          <div class="row">
+              <div class="col-lg-6">
+                  <button type="button" class="btn  btn1 btn-sm" (click)="resetData(destinationImageForm)" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>&nbsp;Add New Destination Image</button>
+              </div>
+              <div class="col-lg-3 text-right">
+                <select class="form-control  input-box rounded-1" #Languagebox (change)="DisplayDestinationsImagesAccordingToLang(Languagebox.value);">
+                    <option value="EN">English</option>
+                    <option *ngFor="let Language of languages" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                </select>
+           </div>
+           <div class="col-lg-3">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
+                <input type="text" class="form-control input-box" [(ngModel)]="term" placeholder="Search...">
+              </div>
+           </div>
+          </div>
+          <br>
+          <div class="row">
+              <div class="col-lg-12 col-md-12">
+                  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-responsive row-border hover">
+                      <thead class="bg-primary text-white text-center">
+                          <tr style="white-space:nowrap;">
+                              <th>Sl No</th>
+                              <th>Add More Languages</th>
+                              <th>Destination</th>
+                              <th>Image</th>
+                              <th>Image Description</th>
+                              <th>Language</th>
+                              <th>Created On</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let Destination of destinationImagesData |filter:term; index as i " class="text-center">
+                              <td>{{i+1}}</td>
+                              <td>
+                                  
+                                  <button *ngIf="Destination.LanguageValue === 'EN'" class="btn btn-info btn-xs" (click)="getDestinationImageDetail(Destination)" data-toggle="modal" data-target="#AddMoreDestinationImagesWithLanguage"><i class="fa fa-plus"></i>Add More Languages</button> 
+                              </td>
+                              <td>{{Destination.DestinationName | titlecase}}</td>
+                              <td><img src="{{this.env.apiUrl}}{{Destination.DestinationImage}}" class="img-thumbnail" style="border-radius:10px;" height="20px;" width="100px;" /></td>
+                              <td>{{Destination.ImageDescription |titlecase}}</td>
+                              <td style="color:red"><b>{{Destination.LanguageValue === 'EN'?'English':Destination.LanguageName}}</b></td>
+                              <td>{{Destination.CreatedOn | date:'short'}}</td>
+                              <td style="display:inline-flex">
+                                  <button class="btn btn-danger btn-xs mt-4" (click)="sendDestinationImageDetailsToModalPopUp(Destination)" data-toggle="modal" data-target="#DeleteModal" title="Delete Destination Image Details" data-toggle="modal" data-target="#DeleteModal"><i class="ti-trash"></i></button>
+                                  <button *ngIf="Destination.LanguageValue=== 'EN'" class="btn btn-primary btn-xs mt-4" (click)="editDestinationImages(Destination)" title="Edit Destination Image Details" data-toggle="modal" data-target="#myModal"><i class="ti-pencil-alt"></i></button>
+                                  <button *ngIf="Destination.LanguageValue!== 'EN'" class="btn btn-primary btn-xs mt-4" (click)="editDestinationNewOptionImages(Destination)" title="Edit Destination Image Details" data-toggle="modal" data-target="#AddMoreDestinationImagesWithLanguage"><i class="ti-pencil-alt"></i></button>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+          <form #destinationImageForm="ngForm">
+              <div class="modal-header destination-header text-center" style="background-image: url('assets/images/background.jpg');">
+                  <h4 class="modal-title text-white"><i class="fa fa-picture-o"></i>&nbsp;Add New Destination Image</h4>
+                  <button type="button"  class="close text-white cross-button" data-dismiss="modal">&times;</button>
+              </div>
+              <br>
+              <br>
+              <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details In English</b></span></h4>
+                    </div>
+                </div><br>
+                  <div class="row">
+                      <div class="col-lg-8 mx-auto">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Destination Name</span>
+                              </div>
+                              <select class="form-control input-box" name="DestinationId" #DestinationTextBox #destinationBox="ngModel" (ngModelChange)="onChange($event)" [(ngModel)]="destination.DestinationId" required>
+                                  <option value="">Select Destination</option>
+                                  <option *ngFor="let Destination of destinationDataFromDestination" value="{{Destination.Id}}">{{Destination.DestinationName}}</option>
+                              </select>
+                          </div>
+                          <div class="text-center " *ngIf="destinationBox.errors && (destinationBox.invalid && destinationBox.touched)">
+                            <small class=" error-mesg" *ngIf="destinationBox?.errors.required"><b>Please Select Destination Field**</b></small>
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="row">
+                      <div class="col-lg-2 mx-auto">
+                          <h2><span class="badge badge-primary image-label"><i class="fa fa-picture-o"></i>&nbsp;Destination Image</span></h2>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-6  mx-auto">
+                          <ngx-image-uploader [options]="options" [(ngModel)]="image" name="DestinationImage" (upload)="onUpload($event)" required></ngx-image-uploader>
+                      </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="row">
+                      <div class="col-lg-8 mx-auto text-center">
+                          <label><b>Image Description</b></label>
+                          <textarea class="form-control " name="ImageDescription" [(ngModel)]="destination.ImageDescription"></textarea>
+                      </div>
+                  </div>
+                  <br>
+                  <br>
+              </div>
+              <div class="modal-footer">
+                  <button *ngIf="destination.Id == null" [disabled]="destinationImageForm.invalid"  type="submit" class="btn btn-primary my-button btn-lg darkblue" (click)="onsubmit(destinationImageForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+                  <button *ngIf="destination.Id != null" [disabled]="destinationImageForm.invalid" type="submit" class="btn btn-primary my-button btn-lg darkblue" (click)="onsubmit(destinationImageForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Update</button>
+                  <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+                  <button type="button" class="btn btn-danger  close-button btn-lg red"  data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+
+<!-- Add More Language Modal Starts -->
+<div id="AddMoreDestinationImagesWithLanguage" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+  
+        <!-- Modal content-->
+        <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+            <form #destinationImageNewOptionForm="ngForm">
+                <div class="modal-header destination-header text-center" style="background-image: url('assets/images/background.jpg');">
+                    <h4 class="modal-title text-white"><i class="fa fa-picture-o"></i>&nbsp;Add New Destination Image</h4>
+                    <button type="button" (click)="resetData(destinationImageNewOptionForm)"  class="close text-white cross-button" data-dismiss="modal">&times;</button>
+                </div>
+                <br>
+                <br>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                          <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details According To Selected Language</b></span></h4>
+                        </div>
+                    </div><br>
+                  <div class="row">
+                      <div class="col-lg-8 mx-auto">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Select Language</span>
+                            </div>
+                           <select class="form-control input-box" #LanguageTextBox name="LanguageValue"[class.is-invalid]="language.invalid && language.touched" #language="ngModel" [(ngModel)]="destinationImageOption.LanguageValue"  (change)="ChangeLabels(LanguageTextBox.value);" required>
+                               <option value="" selected disabled >Select Language</option>
+                               <option *ngFor="let Language of languagesData" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                           </select>
+                        </div>
+                        <div class="text-center " *ngIf="language.errors && (language.invalid && language.touched)">
+                          <small class=" error-mesg" *ngIf="language?.errors.required"><b>Please Select Language Field**</b></small>
+                        </div>
+                      </div>
+                  </div><br><br>
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Destination Name</span>
+                                </div>
+                                <select class="form-control input-box" name="DestinationId" #DestinationTextBox #destinationBox="ngModel" [(ngModel)]="destinationImageOption.DestinationId" required>
+                                    <option value="">Select Destination</option>
+                                    <option *ngFor="let Destination of destinationListsInNewOption" value="{{Destination.Id}}">{{Destination.DestinationName}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="destinationBox.errors && (destinationBox.invalid && destinationBox.touched)">
+                              <small class=" error-mesg" *ngIf="destinationBox?.errors.required"><b>Please Select Destination Field**</b></small>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-2 mx-auto">
+                            <h2><span class="badge badge-primary image-label"><i class="fa fa-picture-o"></i>&nbsp;Destination Image</span></h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6  mx-auto">
+                            <ngx-image-uploader [options]="options" [(ngModel)]="image" name="DestinationImage" (upload)="onUpload($event)" required></ngx-image-uploader>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto text-center">
+                            <label><b>Image Description</b></label>
+                            <textarea class="form-control " name="ImageDescription" [(ngModel)]="destinationImageOption.ImageDescription"></textarea>
+                            <!-- form data -->
+                            <!-- <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Image Description</span>
+                                </div>
+                                <input type="text" name="ImageDescription" [(ngModel)]="destination.ImageDescription" class="form-control input-box" placeholder="Image Description">
+                            </div> -->
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <button *ngIf="destination.Id == null" [disabled]="destinationImageNewOptionForm.invalid" type="submit" class="btn btn-primary my-button btn-lg darkblue" (click)="SaveDestinationOption(destinationImageNewOptionForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+                    <button *ngIf="destination.Id != null" [disabled]="destinationImageNewOptionForm.invalid" type="submit" class="btn btn-primary my-button btn-lg darkblue" (click)="SaveDestinationOption(destinationImageNewOptionForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Update</button>
+                    <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+                    <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetData(destinationImageNewOptionForm)"   data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+<!-- Add More Language Modal Ends -->
+<!-- The Delete Modal -->
+<div class="modal fade" id="DeleteModal">
+  <div class="modal-dialog">
+      <div class="modal-content deletemodal-country">
+
+          <!-- Delete Modal Header -->
+          <div class="modal-header"  style="background-image: url('assets/images/background.jpg');">
+              <h4 class="modal-title delete-title text-white">Delete</h4>
+              <button type="button" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body delete-body text-center">
+              <b><i class="ti-alert"></i>&nbsp;Are You Sure You Want To Delete &nbsp;{{destinationImageDetails.ImageDescriptionInEnglish | titlecase}}&nbsp;?</b>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer mx-auto">
+              <button type="button" (click)="deleteDestinationImages(destinationImageDetails)" data-dismiss="modal" class="btn btn-success btn-sm all-button" data-dismiss="modal"><i class="ti ti-trash"></i>&nbsp;Yes</button>
+              <button type="button" class="btn btn-danger btn-sm all-button " data-dismiss="modal"><i class="ti ti-close"></i>&nbsp;No</button>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->

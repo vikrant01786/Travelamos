@@ -1,0 +1,710 @@
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->
+<ngx-spinner bdColor="#af00ff" size="large" color="#fff" type="line-scale-pulse-out">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
+  <div class="container" style="background-image: url('assets/images/background.jpg');">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1 class="text-white"><b><i class="fa fa-globe"></i>&nbsp;Days</b></h1>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header country-head"><i class="fa fa-globe"></i>&nbsp;Days List</div>
+        <div class="card-body country-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <button type="button" (click)="resetData(DaysEnglishFirstModalPopUp)" class="btn btn1 btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>&nbsp;Add New Program</button>
+                </div>
+                <div class="col-lg-3 text-right">
+                  <select class="form-control  input-box rounded-1"  #Languagebox (change)="DisplayProgramDaysAccordingToLang(Languagebox.value);">
+                      <option value="EN">English</option>
+                      <option *ngFor="let Language of languages" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                  </select>
+             </div>
+             <div class="col-lg-3">
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                  </div>
+                  <input type="text" class="form-control input-box" [(ngModel)]="term" placeholder="Search...">
+                </div>
+             
+             </div>
+            </div>
+            <br>
+<br>                   
+            <div class="row"> 
+                <div class="col-lg-12 col-md-12">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-responsive row-border hover">     
+                        <thead class="bg-primary text-white"  >     
+                            <tr style="white-space:nowrap;" class="text-center">
+                                <th>Sl No</th>
+                                <th>Add More Language</th>
+                                <th>ID</th>
+                                <th>Tour Title</th>  
+                                <th>Program Title</th>
+                                <th>Days</th>
+                                <th>Days Title</th>
+                                <th>Days Image</th>
+                                <th>Days Description</th>
+                                <th>LanguageValue</th>
+                                <th>CreatedOn</th>
+                                <th>Actions</th> 
+                            </tr>
+                        </thead>
+                         <tbody> 
+                        <tr  *ngFor=" let Days of DaysDataInDays | filter:term; index as i" class="text-center">
+                                 <td>{{i+1}}</td> 
+                                 <td>
+                                    <button *ngIf="Days.LanguageValue === 'EN'" class="btn btn-info btn-xs" (click)="getDetailsOfDays(Days)"  data-toggle="modal" data-target="#AddMoreLanguage"><i class="fa fa-plus"></i>Add More Language</button>
+                                 </td>
+                                 <td>{{Days.DaysID}}</td>
+                                 <td>{{Days.TourTitle}}</td>  
+                                <td>{{Days.ProgramTitle}}</td>
+                                <td>{{Days.Days}}</td>
+                                <td>{{Days.DaysTitle}}</td>
+                                <td>
+                                    <img src="{{this.env.apiUrl}}{{Days.DaysImage}}" class="img-thumbnail" style="border-radius:10px;" height="20px;" width="100px;">
+                                </td>
+                                <td class="Description">{{Days.DaysDescription}}</td>
+                                <td style="color:Red"><b>{{Days.LanguageValue ==='EN'? 'English':Days.LanguageName}}</b></td>
+                                <td>{{Days.CreatedOn | date: 'medium'}}</td>
+                                <td  style="display:inline-flex">
+                                    <button  class="btn btn-danger btn-xs" title="Delete Tour Program" (click)="sendDaysDetailsToModalPopUp(Days);" data-toggle="modal" data-target="#DeleteModal"><i class="ti-trash"></i></button>
+                                    <button *ngIf="Days.LanguageValue=== 'EN'" class="btn btn-primary btn-xs" title="Edit Tour" (click)="editProgramDays(Days)" data-toggle="modal" data-target="#EnglishLanguageEditPopUp"><i class="ti-pencil-alt"></i></button>
+                                    <button *ngIf="Days.LanguageValue !== 'EN'" class="btn btn-primary btn-xs" title="Edit Tour" (click)="editProgramNewOption(Days)" data-toggle="modal" data-target="#OtherLanguageEditPopUp"><i class="ti-pencil-alt"></i></button>
+                                </td>
+                            </tr>
+                        </tbody><br>
+                </table>
+                </div>
+            
+        </div>
+       
+    </div>
+    </div>
+    </div>
+  </div>
+  </div>
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+  
+        <!-- Modal content-->
+        <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+            <form #DaysEnglishFirstModalPopUp="ngForm">
+                <div class="modal-header destination-header text-center"  style="background-image: url('assets/images/background.jpg');">
+                    <h4 class="modal-title text-white"><i class="fa fa-globe"></i>&nbsp;Add New Tour Days</h4>
+                    <button type="button" (click)="resetDataFirstEnglishModalPopUp(DaysEnglishFirstModalPopUp)"  class="close text-white cross-button" data-dismiss="modal">&times;</button>
+                </div>
+                <br>
+                <br>
+                <div class="modal-body">
+                  <div class="row">
+                      <div class="col-lg-12 text-center">
+                        <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details In English</b></span></h4>
+                      </div>
+                  </div><br>
+                  <div class="row">
+                    <div class="col-lg-6">
+                        <!-- form data -->
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text ">Country </span>
+                          </div>
+                          <select class="form-control input-box" #CountryEnglishFirstModalPopUp [(ngModel)]="days.CountryID" (change)="FindTourByCountryID(CountryEnglishFirstModalPopUp.value)"  name="CountryID"  required>
+                              <option value="" selected disabled>Select Country</option>
+                              <option *ngFor="let Country of countryData" value="{{Country.Id}}" >{{Country.CountryName}}</option>
+                          </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- form data -->
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text ">Tour </span>
+                          </div>
+                          <select class="form-control input-box" #TourEnglishFirstModalPopUp  [(ngModel)]="days.TourID" (change)="FindProgramByTourID(TourEnglishFirstModalPopUp.value)"  name="TourID"  required>
+                              <option value="" selected disabled>Select Tour</option>
+                              <option *ngFor="let Tour of tourData" value="{{Tour.Id}}">{{Tour.TourTitle}}</option>
+                          </select>
+                      </div>
+                    </div>
+                </div>
+                <br>
+                <br> 
+
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text ">Program Title</span>
+                              </div>
+                              <select class="form-control input-box" #ProgramEnglishFirstModalPopUp  [(ngModel)]="days.ProgramID" (change)="FindProgramLocationID(ProgramEnglishFirstModalPopUp.value)"  name="ProgramID" required>
+                                  <option value="" selected disabled>Select Program Title</option>
+                                  <option *ngFor="let Program of ProgramData" value= "{{Program.Id}}">{{Program.ProgramTitle}}</option>
+                              </select>
+                        </div>
+                         
+                      </div>
+    
+                      </div>
+                      <br>
+                      <br>
+<form #DaysForm= "ngForm">
+  <div class="row">
+      <div class="col-12 text-center">
+        <button class="btn btn-primary accordion" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <i class= "fa fa-plus"></i>
+          </button><br><br><br><br>
+      </div>
+ 
+      <div class="col-12">
+        <div class="collapse panel" id="collapseExample">
+            <div class="row">
+                <div class="col-lg-6">
+                  <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text ">DAYS </span>
+                      </div>
+                      <input type="text" class="form-control input-box" [(ngModel)]="daysInfo.Days" name="Days"  placeholder="DAYS" required>
+                          
+                </div>
+                 
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text ">DAYS TITLE </span>
+                    </div>
+                    <input type="text" class="form-control input-box" name ="DaysTitle" [(ngModel)]="daysInfo.DaysTitle" placeholder="DAYS TITLE" required>           
+              </div>
+            </div>
+            </div><br><br>
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    <ngx-image-uploader [options]="options" [(ngModel)]="image" name="DaysImage" (upload)="onUpload($event)" required></ngx-image-uploader>
+                </div>
+            </div>
+            <br>
+            <br>
+              <div class="row">
+                <div class="col-lg-12 mx-auto text-center">
+                    <!-- form data -->
+                    <label class="text-center"><b>Days Description</b></label>
+                    <br>
+                    <textarea class="form-control" [(ngModel)]="daysInfo.DaysDescription" name="DaysDescription"></textarea>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-right ">
+                    <button type="button" [disabled]="DaysForm.invalid" (click)="StoreDaysInArray(DaysForm)" class="btn btn-success">Save Days</button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <table class="my-table">
+                        <tr>
+                            <th>DAYS</th>
+                            <th>DAYS TITLE</th>
+                            <th>DAYS DISCRIPTION</th>
+                            <th>IMAGE</th>
+                            <th>ACTION</th>
+                        </tr>
+                        <tr *ngFor="let Days of day">
+                            <td>{{Days.Days}}</td>
+                            <td>{{Days.DaysTitle}}</td>
+                            <td>{{Days.DaysDescription}}</td>
+                            <td><Img src="{{this.env.apiUrl}}{{Days.DaysImage}}" width="50px"></td>
+                            <td>
+                                <button class="btn btn-danger btn-xs" (click)="deleteDaysInArray(Days)"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</form>
+ <br><br>                 
+<br>
+<br>
+</div>
+    <div class="modal-footer">
+        <button type="submit"  class="btn btn-primary my-button btn-lg darkblue" (click)="saveDays(DaysEnglishFirstModalPopUp)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+        <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+        <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetDataFirstEnglishModalPopUp(DaysEnglishFirstModalPopUp)" data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+    </div>
+    </form>
+</div>
+</div>
+</div>
+
+<!-- English Language Edit Pop Up Modal Starts -->
+  <div id="EnglishLanguageEditPopUp" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+  
+        <!-- Modal content-->
+        <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+            <form  #EnglishSecondModalPopUp= "ngForm">
+                <div class="modal-header destination-header text-center"  style="background-image: url('assets/images/background.jpg');">
+                    <h4 class="modal-title text-white"><i class="fa fa-globe"></i>&nbsp;Add New Tour Days</h4>
+                    <button type="button"   class="close text-white cross-button" data-dismiss="modal">&times;</button>
+                </div>
+                <br>
+                <br>
+                <div class="modal-body">
+                  <div class="row">
+                      <div class="col-lg-12 text-center">
+                        <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details In English</b></span></h4>
+                      </div>
+                  </div><br>
+                  <div class="row">
+                    <div class="col-lg-6">
+                        <!-- form data -->
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text ">Country </span>
+                          </div>
+                          <select class="form-control input-box" [(ngModel)]="days.CountryID" (ngModelChange)="FindTourByCountryID($event)"  name="CountryID"  >
+                              <option value="" selected disabled>Select Country</option>
+                              <option *ngFor="let Country of countryData" value="{{Country.Id}}" >{{Country.CountryName}}</option>
+                          </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- form data -->
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text ">Tour </span>
+                          </div>
+                          <select class="form-control input-box" #tour  [(ngModel)]="days.TourID" (change)="FindProgramByTourID(tour.value)"  name="TourID"  >
+                              <option value="" selected disabled>Select Tour</option>
+                              <option *ngFor="let Tour of tourData" value="{{Tour.Id}}">{{Tour.TourTitle}}</option>
+                          </select>
+                      </div>
+                    </div>
+                </div>
+                <br>
+                <br> 
+
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text ">Program Title</span>
+                              </div>
+                              <select class="form-control input-box" #Program [(ngModel)]="days.ProgramID" (change)="FindProgramLocationID(Program.value)"  name="ProgramID" >
+                                  <option value="" selected disabled>Select Program Title</option>
+                                  <option *ngFor="let Program of ProgramData" value= "{{Program.Id}}">{{Program.ProgramTitle}}</option>
+                              </select>
+                        </div>
+                         
+                      </div>
+    
+                      </div>
+                      <br>
+                      <br>
+  <div class="row">
+      <div class="col-12">
+            <div class="row">
+                <div class="col-lg-6">
+                  <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text ">DAYS </span>
+                      </div>
+                      <input type="text" class="form-control input-box" [(ngModel)]="days.Days" name="Days"  placeholder="DAYS" >        
+                </div>  
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text ">DAYS TITLE </span>
+                    </div>
+                    <input type="text" class="form-control input-box" name ="DaysTitle" [(ngModel)]="days.DaysTitle" placeholder="DAYS TITLE" >           
+              </div>
+            </div>
+            </div><br><br>
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    <ngx-image-uploader [options]="options" [(ngModel)]="image" name="DaysImage" (upload)="onUpload($event)" ></ngx-image-uploader>
+                </div>
+            </div>
+            <br>
+            <br>
+              <div class="row">
+                <div class="col-lg-12 mx-auto text-center">
+                    <!-- form data -->
+                    <label class="text-center"><b>Days Description</b></label>
+                    <br>
+                    <textarea class="form-control" [(ngModel)]="days.DaysDescription" name="DaysDescription"></textarea>
+                </div>
+            </div>
+      </div>
+  </div>
+<!-- </form> -->
+ <br><br>                 
+<br>
+<br>
+</div>
+    <div class="modal-footer">
+        <button type="submit"  class="btn btn-primary my-button btn-lg darkblue" (click)="saveUpdatedDays(EnglishSecondModalPopUp)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+        <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+        <button type="button" class="btn btn-danger close-button btn-lg red"  data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+    </div>
+    </form>
+</div>
+</div>
+</div>
+<!-- English Language Edit Pop Up Modal Ends -->
+
+<!-- Add More Languages Starts -->
+ <div id="AddMoreLanguage" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+  
+        <!-- Modal content-->
+        <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+            <form #AddMoreLanguageFirstModalPopUPForm="ngForm">
+                <div class="modal-header destination-header text-center"  style="background-image: url('assets/images/background.jpg');">
+                    <h4 class="modal-title text-white"><i class="fa fa-globe"></i>&nbsp;Add New Tour Days</h4>
+                    <button type="button" (click)="resetDataFirstLanguageModalPopUp(AddMoreLanguageFirstModalPopUPForm)"  class="close text-white cross-button" data-dismiss="modal">&times;</button>
+                </div>
+                <br>
+                <br>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                          <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details In Selected Language</b></span></h4>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Select Language</span>
+                              </div>
+                             <select class="form-control input-box" #LanguageTextBox  name="LanguageValue" [(ngModel)]="daysNewOption.LanguageValue" (change)="ChangeLabels(LanguageTextBox.value);" required>
+                                 <option value="" selected disabled>Select Language</option>
+                                 <option *ngFor="let Language of languagesData" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                             </select>
+                             
+                          </div>
+                        
+                        </div>
+                       
+                    </div><br><br>
+                
+                  <div class="row">
+                    <div class="col-lg-6">
+                        <!-- form data -->
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text ">Country </span>
+                          </div>
+                          <select class="form-control input-box" #CountryFirstLanguageModalBox  [(ngModel)]="daysNewOption.CountryID" (change)="FindTourByCountryIDInSecondModal(CountryFirstLanguageModalBox.value)"  name="CountryID"  required>
+                              <option value="" selected disabled>Select Country</option>
+                              <option *ngFor="let Country of CountryListData" value="{{Country.Id}}" >{{Country.CountryName}}</option>
+                          </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- form data -->
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text ">Tour </span>
+                          </div>
+                          <select class="form-control input-box" #TourLanguageFirstModalPopUPBox  [(ngModel)]="daysNewOption.TourID" (change)="FindProgramByTourIDInSecondModal(TourLanguageFirstModalPopUPBox.value)"  name="TourID"  required>
+                              <option value="" selected disabled>Select Tour</option>
+                              <option *ngFor="let Tour of tourDataInSecondModal" value="{{Tour.Id}}">{{Tour.TourTitle}}</option>
+                          </select>
+                      </div>
+                    </div>
+                </div>
+                <br>
+                <br> 
+
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text ">Program Title</span>
+                              </div>
+                              <select class="form-control input-box" #ProgramLanguageFirstTextBox  [(ngModel)]="daysNewOption.ProgramID" (change)="FindProgramLocationIDInSecondModal(ProgramLanguageFirstTextBox.value)"  name="ProgramID" required>
+                                  <option value="" selected disabled>Select Program Title</option>
+                                  <option *ngFor="let Program of ProgramDataInSecondModal" value= "{{Program.Id}}">{{Program.ProgramTitle}}</option>
+                              </select>
+                        </div>
+                         
+                      </div>
+    
+                      </div>
+                      <br>
+                      <br>
+<form #DaysnewOptionFormOne= "ngForm">
+  <div class="row">
+      <div class="col-12 text-center">
+        <button class="btn btn-primary MyLanguage" type="button" data-toggle="collapse" data-target="#AddLanguageCollapse" aria-expanded="false" aria-controls="AddLanguageCollapse">
+        <i class= "fa fa-plus"></i>
+          </button><br><br><br><br>
+      </div>
+ 
+      <div class="col-12">
+        <div class="collapse panel" id="AddLanguageCollapse">
+            <div class="row">
+                <div class="col-lg-6">
+                  <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text ">DAYS </span>
+                      </div>
+                      <input type="text" class="form-control input-box" [(ngModel)]="daysInfo.Days" name="Days"  placeholder="DAYS" required>
+                          
+                </div>
+                 
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text ">DAYS TITLE </span>
+                    </div>
+                    <input type="text" class="form-control input-box" name ="DaysTitle" [(ngModel)]="daysInfo.DaysTitle" placeholder="DAYS TITLE" required>           
+              </div>
+            </div>
+            </div><br><br>
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    <ngx-image-uploader [options]="options" [(ngModel)]="image" name="DaysImage" (upload)="onUpload($event)" required></ngx-image-uploader>
+                </div>
+            </div>
+            <br>
+            <br>
+              <div class="row">
+                <div class="col-lg-12 mx-auto text-center">
+                    <!-- form data -->
+                    <label class="text-center"><b>Days Description</b></label>
+                    <br>
+                    <textarea class="form-control" [(ngModel)]="daysInfo.DaysDescription" name="DaysDescription"></textarea>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-right ">
+                    <button type="button" [disabled]="DaysnewOptionFormOne.invalid"  (click)="StoreDaysNewOptionInArray(DaysnewOptionFormOne)" class="btn btn-success">Save Days</button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <table class="my-table">
+                        <tr>
+                            <th>DAYS</th>
+                            <th>DAYS TITLE</th>
+                            <th>DAYS DISCRIPTION</th>
+                            <th>IMAGE</th>
+                            <th>ACTION</th>
+                        </tr>
+                        <tr *ngFor="let Days of day">
+                            <td>{{Days.Days}}</td>
+                            <td>{{Days.DaysTitle}}</td>
+                            <td>{{Days.DaysDescription}}</td>
+                            <td><Img src="{{this.env.apiUrl}}{{Days.DaysImage}}" width="50px"></td>
+                            <td>
+                                <button class="btn btn-danger btn-xs" (click)="deleteDaysInArray(Days)"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</form>
+ <br><br>                 
+<br>
+<br>
+</div>
+    <div class="modal-footer">
+        <button type="submit" [disabled]="AddMoreLanguageFirstModalPopUPForm.invalid"  class="btn btn-primary my-button btn-lg darkblue" (click)="saveDaysNewoption(AddMoreLanguageFirstModalPopUPForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+        <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+        <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetDataFirstLanguageModalPopUp(AddMoreLanguageFirstModalPopUPForm)" data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+    </div>
+    </form>
+</div>
+</div>
+</div>
+<!-- Add More Languages Ends -->
+
+
+<!-- Add More Language Edit Pop Up Modal Starts -->
+<div id="OtherLanguageEditPopUp" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+  
+        <!-- Modal content-->
+        <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+            <form #AddMoreLanguageSecondModalPopUp="ngForm">
+                <div class="modal-header destination-header text-center"  style="background-image: url('assets/images/background.jpg');">
+                    <h4 class="modal-title text-white"><i class="fa fa-globe"></i>&nbsp;Add New Tour Days</h4>
+                    <button type="button" (click)="resetOtherLanguageEditModalPopUp(AddMoreLanguageSecondModalPopUp)" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+                </div>
+                <br>
+                <br>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                          <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details In Selected Language</b></span></h4>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Select Language</span>
+                              </div>
+                             <select class="form-control input-box" #LanguageSecondModalTextBox  name="LanguageValue" [(ngModel)]="daysNewOption.LanguageValue" (change)="ChangeLabels(LanguageSecondModalTextBox.value)" >
+                                 <option value="" selected disabled>Select Language</option>
+                                 <option *ngFor="let Language of languagesData" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                             </select>        
+                          </div>  
+                        </div>  
+                    </div><br><br>
+                  <div class="row">
+                    <div class="col-lg-6">
+                        <!-- form data -->
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text ">Country </span>
+                          </div>
+                          <select class="form-control input-box" #CountrySecondLanguageModalBox [(ngModel)]="daysNewOption.CountryID" (change)="FindTourByCountryIDInSecondModal(CountryFirstLanguageModalBox.value)"  name="CountryID"  required>
+                              <option value="" selected disabled>Select Country</option>
+                              <option *ngFor="let Country of CountryListData" value="{{Country.Id}}" >{{Country.CountryName}}</option>
+                          </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- form data -->
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text ">Tour </span>
+                          </div>
+                          <select class="form-control input-box" #TourLanguageSecondModalPopUPBox  [(ngModel)]="daysNewOption.TourID" (change)="FindProgramByTourIDInSecondModal(TourLanguageFirstModalPopUPBox.value)"  name="TourID"  required>
+                              <option value="" selected disabled>Select Tour</option>
+                              <option *ngFor="let Tour of tourDataInSecondModal" value="{{Tour.Id}}">{{Tour.TourTitle}}</option>
+                          </select>
+                      </div>
+                    </div>
+                </div>
+                <br>
+                <br> 
+
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text ">Program Title</span>
+                              </div>
+                              <select class="form-control input-box" #ProgramLanguageSecondModalPopUPBox  [(ngModel)]="daysNewOption.ProgramID" (change)="FindProgramLocationIDInSecondModal(ProgramLanguageSecondModalPopUPBox.value)"  name="ProgramID" required>
+                                  <option value="" selected disabled>Select Program Title</option>
+                                  <option *ngFor="let Program of ProgramDataInSecondModal" value= "{{Program.Id}}">{{Program.ProgramTitle}}</option>
+                              </select>
+                        </div>
+                         
+                      </div>
+    
+                      </div>
+                      <br>
+                      <br>
+
+  <div class="row">
+      <div class="col-12">
+            <div class="row">
+                <div class="col-lg-6">
+                  <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text ">DAYS </span>
+                      </div>
+                      <input type="text" class="form-control input-box" [(ngModel)]="daysNewOption.Days" name="Days"  placeholder="DAYS" required>          
+                </div>    
+              </div>
+              <div class="col-lg-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text ">DAYS TITLE </span>
+                    </div>
+                    <input type="text" class="form-control input-box" name ="DaysTitle" [(ngModel)]="daysNewOption.DaysTitle" placeholder="DAYS TITLE" required>           
+              </div>
+            </div>
+            </div><br><br>
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    <ngx-image-uploader [options]="options" [(ngModel)]="image" name="DaysImage" (upload)="onUpload($event)" required></ngx-image-uploader>
+                </div>
+            </div>
+            <br>
+            <br>
+              <div class="row">
+                <div class="col-lg-12 mx-auto text-center">
+                    <!-- form data -->
+                    <label class="text-center"><b>Days Description</b></label>
+                    <br>
+                    <textarea class="form-control" [(ngModel)]="daysNewOption.DaysDescription" name="DaysDescription"></textarea>
+                </div>
+            </div>
+      </div>
+  </div>
+<!-- </form> -->
+ <br><br>                 
+<br>
+<br>
+</div>
+    <div class="modal-footer">
+        <button type="submit" [disabled]="AddMoreLanguageSecondModalPopUp.invalid" class="btn btn-primary my-button btn-lg darkblue" (click)="saveUpdatedNewOptionDays(AddMoreLanguageSecondModalPopUp)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+        <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+        <button type="button" class="btn btn-danger close-button btn-lg red"  data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+    </div>
+    </form>
+</div>
+</div>
+</div>
+<!-- Add More Language Edit Pop Up Modal Ends -->
+  
+  
+  
+  <!-- The Delete Modal -->
+  <div class="modal fade" id="DeleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content deletemodal-country">
+  
+            <!-- Delete Modal Header -->
+            <div class="modal-header"  style="background-image: url('assets/images/background.jpg');">
+                <h4 class="modal-title delete-title text-white">Delete</h4>
+                <button type="button" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+            </div>
+  
+            <!-- Modal body -->
+            <div class="modal-body delete-body text-center">
+                <b><i class="ti-alert"></i>&nbsp;Are You Sure You Want To Delete &nbsp;&nbsp;?</b>
+            </div>
+  
+            <!-- Modal footer -->
+            <div class="modal-footer mx-auto">
+                <button type="button" (click)="deleteDays(DaysDetail)" data-dismiss="modal" class="btn btn-success btn-sm all-button "><i class="ti ti-trash"></i>&nbsp;Yes</button>
+                <button type="button" class="btn btn-danger btn-sm all-button " data-dismiss="modal"><i class="ti ti-close"></i>&nbsp;No</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+  <!-- 
+  |________________________________________________
+  | © 2019 Selectical Pvt.Ltd All Rights Reserved |
+  | @ Designed & Developed By Vikrant Rana        |
+  |_______________________________________________|  
+  -->

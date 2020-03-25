@@ -1,0 +1,271 @@
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->
+<ngx-spinner bdColor="#af00ff" size="large" color="#fff" type="line-scale-pulse-out">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="container" style="background-image: url('assets/images/background.jpg');">
+  <div class="row">
+      <div class="col-lg-12 text-center">
+          <h1 class="text-white"><b><i class="fa fa-globe"></i>&nbsp;Tour Terms</b></h1>
+      </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+      <div class="col-lg-12">
+  <div class="card">
+      <div class="card-header country-head"><i class="fa fa-globe"></i>&nbsp;Tour Terms List</div>
+      <div class="card-body country-body">
+          <div class="row">
+              <div class="col-lg-6">
+                  <button type="button" (click)="resetData(tourTermForm)" class="btn btn1 btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>&nbsp;Add New Tour Terms</button>
+              </div>
+              <div class="col-lg-3 text-right">
+                <select class="form-control  input-box rounded-1"  #Languagebox (change)="DisplayTourTermAccordingToLang(Languagebox.value);">
+                    <option value="EN">English</option>
+                    <option *ngFor="let Language of languages" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                </select>
+           </div>
+           <div class="col-lg-3">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
+                <input type="text" class="form-control input-box" [(ngModel)]="term" placeholder="Search...">
+              </div>
+           
+           </div>
+          </div>
+          <br>
+          <div class="row">
+              <div class="col-lg-12 col-md-12">
+                  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-responsive row-border hover">
+                      <thead class="bg-primary text-white">
+                          <tr style="white-space:nowrap;">
+                              <th>Sl No</th>
+                              <th>Add More Language</th>
+                              <th>Tour Name</th>
+                              <th>Term Title</th>
+                              <th>Term Description</th>
+                              <th>Language</th>
+                              <th>CreatedOn</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let TourTerm of tourTermData | filter:term; index as i"  class="text-center">
+                              <td>{{i+1}}</td>
+                              <td>
+                                  <button *ngIf="TourTerm.LanguageValue === 'EN'" (click)="GetTourTermsDetails(TourTerm)" data-toggle="modal" data-target="#AddMoreLanguage" class="btn btn-primary btn-xs"><i class="fa fa-plus"></i>&nbsp;Add More Language</button>
+                              </td>
+                              <td>{{TourTerm.TourTitle |titlecase}}</td>
+                              <td>{{TourTerm.TermTitle | titlecase}}</td>
+                              <td class="Description">{{TourTerm.TermDescription |titlecase}}</td>
+                              <td style="color:red;"><b>{{TourTerm.LanguageValue === 'EN'? 'English':TourTerm.LanguageName | titlecase}}</b></td>
+                              <td>{{TourTerm.CreatedOn | date: 'medium'}}</td>
+                              <td style="display:inline-flex">
+                                  <button class="btn btn-danger btn-xs" title="Delete Tour" (click)="sendTourTermDetailsToModalPopUp(TourTerm);" data-toggle="modal" data-target="#DeleteModal"><i class="ti-trash"></i></button>
+                                  <button *ngIf="TourTerm.LanguageValue === 'EN'" class="btn btn-primary btn-xs" title="Edit Tour" (click)="editTourTerm(TourTerm)" data-toggle="modal" data-target="#myModal"><i class="ti-pencil-alt"></i></button>
+                                  <button  *ngIf="TourTerm.LanguageValue !== 'EN'" class="btn btn-primary btn-xs" title="Edit Tour" (click)="editTourTermNewOption(TourTerm)" data-toggle="modal" data-target="#AddMoreLanguage"><i class="ti-pencil-alt"></i></button>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+</div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+      <!-- Modal content-->
+      <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+          <form #tourTermForm="ngForm">
+              <div class="modal-header destination-header text-center"  style="background-image: url('assets/images/background.jpg');">
+                  <h4 class="modal-title text-white"><i class="fa fa-globe"></i>&nbsp;Add New Tour Term</h4>
+                  <button type="button" (click)="resetData(tourTermForm)" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+              </div>
+              <br>
+              <br>
+              <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                      <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details In English</b></span></h4>
+                    </div>
+                </div><br>
+                  <div class="row">
+                      <div class="col-lg-8 mx-auto">
+                          <!-- form data -->
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text ">Tour</span>
+                              </div>
+                              <select class="form-control input-box" #tour="ngModel" [class.is-invalid]="tour.invalid && tour.touched" name="TourID" #TourTextBox (ngModelChange)="FindTourLocationIDByTourID($event)"   [(ngModel)]="tourterm.TourID" required>
+                                  <option value="" selected disabled>Select Tour</option>
+                                  <option *ngFor="let Tour of tourData" value="{{Tour.Id}}">{{Tour.TourTitle | titlecase}}</option>
+                              </select>
+                          </div>
+                          <div class="text-center " *ngIf="tour.errors && (tour.invalid && tour.touched)">
+                            <small class=" error-mesg" *ngIf="tour?.errors.required"><b>Please Select Tour Title Field**</b></small>
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="row">
+                      <div class="col-lg-8  mx-auto">
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text">Term Title</span>
+                              </div>
+                              <input type="text" name="TermTitle" [(ngModel)]="tourterm.TermTitle" class="form-control input-box" placeholder="Term Title">
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <label><b>Tour Description</b></label>
+                        <textarea name="TermDescription" [(ngModel)]="tourterm.TermDescription" class="form-control input-box"></textarea>
+                        </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="submit" [disabled]="tourTermForm.invalid" class="btn btn-primary my-button btn-lg darkblue" (click)="saveTourTerm(tourTermForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+                  <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+                  <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetData(tourTermForm)" data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+
+
+<!-- Add More Language Modal Starts -->
+<div id="AddMoreLanguage" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+  
+        <!-- Modal content-->
+        <div class="modal-content" style="background-image: url('assets/images/background1.jpg');">
+            <form #tourTermNewOptionForm="ngForm">
+                <div class="modal-header destination-header text-center"  style="background-image: url('assets/images/background.jpg');">
+                    <h4 class="modal-title text-white"><i class="fa fa-globe"></i>&nbsp;Add New Tour Term</h4>
+                    <button type="button" (click)="resetDataSecondModal(tourTermNewOptionForm)" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+                </div>
+                <br>
+                <br>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                          <h4 class="Details"><span class="badge badge-danger"><b>Please Enter Details According To Selected Language</b></span></h4>
+                        </div>
+                    </div><br>
+                  <div class="row">
+                      <div class="col-lg-8 mx-auto">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Select Language *</span>
+                            </div>
+                           <select class="form-control input-box" #LanguageTextBox name="LanguageValue" #language="ngModel" [class.is-invalid]="language.invalid && language.touched" [(ngModel)]="tourtermNewOption.LanguageValue"  (change)="ChangeLabels(LanguageTextBox.value);" required>
+                               <option value="" selected disabled>Select Language</option>
+                               <option *ngFor="let Language of languagesData" value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option>
+                           </select>
+                           
+                        </div>
+                        <div class="text-center " *ngIf="language.errors && (language.invalid && language.touched)">
+                            <small class=" error-mesg" *ngIf="language?.errors.required"><b>Please Select Language Field**</b></small>
+                          </div>
+                      </div>
+                     
+                  </div><br><br>
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <!-- form data -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text ">Tour</span>
+                                </div>
+                                <select class="form-control input-box" #tour="ngModel" [class.is-invalid]="tour.invalid && tour.touched" name="TourID" #TourTextBox (ngModelChange)="FindTourLocationIDByTourID($event)"   [(ngModel)]="tourtermNewOption.TourID" required>
+                                    <option value="" selected disabled>Select Tour</option>
+                                    <option *ngFor="let Tour of tourtermNewOptionData" value="{{Tour.Id}}">{{Tour.TourTitle | titlecase}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center " *ngIf="tour.errors && (tour.invalid && tour.touched)">
+                              <small class=" error-mesg" *ngIf="tour?.errors.required"><b>Please Select Tour Title Field**</b></small>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-8  mx-auto">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Term Title</span>
+                                </div>
+                                <input type="text" name="TermTitle" [(ngModel)]="tourtermNewOption.TermTitle" class="form-control input-box" placeholder="Term Title">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                      <div class="col-lg-12 text-center">
+                          <label><b>Tour Description</b></label>
+                          <textarea name="TermDescription" [(ngModel)]="tourtermNewOption.TermDescription" class="form-control input-box"></textarea>
+                          </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" [disabled]="tourTermNewOptionForm.invalid" class="btn btn-primary my-button btn-lg darkblue" (click)="saveTourTermNewOption(tourTermNewOptionForm)" data-dismiss="modal"><span class="ti-save-alt"></span>&nbsp;Save</button>
+                    <button type="reset" class="btn btn-info reset-button btn-lg blue"><span class="ti-control-shuffle"></span>&nbsp;Reset</button>
+                    <button type="button" class="btn btn-danger close-button btn-lg red" (click)="resetDataSecondModal(tourTermNewOptionForm)" data-dismiss="modal"><span class="ti-close"></span>&nbsp;Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+<!-- Add More Language Modal Ends -->
+
+
+
+<!-- The Delete Modal -->
+<div class="modal fade" id="DeleteModal">
+  <div class="modal-dialog">
+      <div class="modal-content deletemodal-country">
+
+          <!-- Delete Modal Header -->
+          <div class="modal-header" style="background-image: url('assets/images/background.jpg');">
+              <h4 class="modal-title delete-title text-white">Delete</h4>
+              <button type="button" class="close text-white cross-button" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body delete-body text-center">
+              <b><i class="ti-alert"></i>&nbsp;Are You Sure You Want To Delete &nbsp;<b><span class="text-primary"></span></b>&nbsp;?</b>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer mx-auto">
+              <button type="button" (click)="deleteTourTerm(tourTermDetails)" data-dismiss="modal" class="btn btn-success btn-sm all-button "><i class="ti ti-trash"></i>&nbsp;Yes</button>
+              <button type="button" class="btn btn-danger btn-sm all-button " data-dismiss="modal"><i class="ti ti-close"></i>&nbsp;No</button>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->

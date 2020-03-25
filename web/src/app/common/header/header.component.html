@@ -1,0 +1,114 @@
+
+ <!-- <link rel="stylesheet" type="text/css" href="../../../assets/css/responsive.css">  -->
+
+<header class="header " style="z-index: 99999 !important;">
+
+ 
+  <!-- Top Bar -->
+  <div class="top_bar">
+    <div class="container">
+      <div class="row">
+        <div class="col d-flex flex-row">
+          <div *ngFor="let Header of headerData" class="phone">{{Header.ContactNumber === ''|| Header.ContactNumber=== null? '+45 345 3324 56789':Header.ContactNumber}}</div>
+          <div  *ngFor="let Header of headerData" class="social">
+            <ul class="social_list">
+              <li class="social_list_item"><a href="{{Header.FacebookLink}}"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+              <li class="social_list_item"><a href="{{Header.TwitterLink}}"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+              <li class="social_list_item"><a href="{{Header.LinkedInLink}}"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+            </ul>
+          </div>
+          <div class="user_box ml-auto">
+            <!-- <div class="user_box_login user_box_link"><a style="cursor:pointer" data-toggle="modal"  data-target="#myModal" >login</a></div> -->
+            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+              Open modal
+            </button> -->
+            <!-- <div class="user_box_register user_box_link"><a href="#">register</a></div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
+
+  <!-- Main Navigation -->
+<div class="container">
+  <nav class=" navbar navbar-expand-lg " style="z-index: 99999 !important">
+    <a class="navbar-brand" href="#"><a routerLink="/"><img src="assets/images/logo.png" alt=""class="mr-3" >Travelamos</a></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="outline: none !important;">
+      <span class="navbar-toggler-icon"><i class="fa fa-bars text-white mt-1"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="main_nav_item nav-item mt-2"><a routerLink="/">{{'Header.Home' | translate}}</a></li>
+        <li class="main_nav_item nav-item mt-2"><a routerLink="/destinations">{{'Header.Destination' | translate}}</a></li>
+        <li class="main_nav_item nav-item mt-2"><a routerLink="/tours" (click)="removeCountryDataFromLocalStorage()">{{'Header.Tours' | translate}}</a></li>
+        <li class="main_nav_item nav-item mt-2"><a routerLink="/contact-us">{{'Header.Contact Us'| translate}}</a></li>
+        <li class="nav-item ">
+          <form >
+            
+            
+            <select   class="selectpicker form-control width-50" name="Language" [(ngModel)]="Languages"  #LanguageVal (change)="SetLanguageValueInLocalStorage(LanguageVal.value)" data-width="fit">
+              <option value="EN">
+               English </option>
+              <option *ngFor="let Language of LanguageData"  value="{{Language.LanguageValue}}">{{Language.LanguageName}}</option> 
+          </select>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>  
+          <!-- <div class="content_search ml-lg-0 ml-auto">
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+              <g>
+                <g>
+                  <g>
+                    <path class="mag_glass" fill="#FFFFFF" d="M78.438,216.78c0,57.906,22.55,112.343,63.493,153.287c40.945,40.944,95.383,63.494,153.287,63.494
+                    s112.344-22.55,153.287-63.494C489.451,329.123,512,274.686,512,216.78c0-57.904-22.549-112.342-63.494-153.286
+                    C407.563,22.549,353.124,0,295.219,0c-57.904,0-112.342,22.549-153.287,63.494C100.988,104.438,78.439,158.876,78.438,216.78z
+                    M119.804,216.78c0-96.725,78.69-175.416,175.415-175.416s175.418,78.691,175.418,175.416
+                    c0,96.725-78.691,175.416-175.416,175.416C198.495,392.195,119.804,313.505,119.804,216.78z"/>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <path class="mag_glass" fill="#FFFFFF" d="M6.057,505.942c4.038,4.039,9.332,6.058,14.625,6.058s10.587-2.019,14.625-6.058L171.268,369.98
+                    c8.076-8.076,8.076-21.172,0-29.248c-8.076-8.078-21.172-8.078-29.249,0L6.057,476.693
+                    C-2.019,484.77-2.019,497.865,6.057,505.942z"/>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div> -->
+       
+            
+            <!-- <span  class="flag-icon flag-icon-gr" ></span> -->
+     
+          
+       
+  
+
+</header>
+
+ <div class="menu trans_500">
+  <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
+    <div class="menu_close_container"><div class="menu_close"></div></div>
+    <div class="logo menu_logo"><a routerLink="/"><img src="assets/images/logo.png" alt=""></a></div>
+    <ul>
+      <li class="menu_item"><a routerLink="/">{{'Header.Home' |translate}}</a></li>
+      <li class="menu_item"><a routerLink="/destinations">{{'Header.Destination' | translate}}</a></li>
+      <li class="menu_item"><a href="#">{{'Header.Tours' | translate}}</a></li>
+      <li class="menu_item"><a href="#">{{'Header.Contact Us'| translate}}</a></li>
+    </ul>
+  </div>
+</div> 
+
+
+
+
+
+
+

@@ -1,0 +1,23 @@
+<!-- <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">  -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.css" rel="stylesheet" type="text/css">
+<div class="container-fluid head ">
+  <div class="row">
+    <div class="col-md-12 p-0" >
+
+      <ngb-carousel *ngIf="event_list" >
+        <ng-template ngbSlide *ngFor="let event of event_list">
+          <img [src]="event.img" alt="Random slide" width="100%" height="600px">
+          <div  class="carousel-caption animated flipInX d-flex h-100 align-items-center justify-content-center" >
+            <h1 class="slider_heading_two " [innerText]="event.eventDescription"></h1>
+            <!-- <h1 class="slider_heading ">{{event.eventLocation}}&nbsp;&nbsp;{{event.DurationInDays}}-Days &nbsp;{{event.DurationInNights}}-Nights</h1> -->
+          </div>
+          <div  class="carousel-caption animated flipInX " >
+            <!-- <h1 class="slider_heading_two " [innerText]="event.eventDescription"></h1> -->
+            <h1 class="slider_heading ">{{event.eventLocation}}</h1>
+            <h3 class="slider_heading days ">{{event.DurationInDays}}-{{'Header.Days' | translate}} &nbsp;{{event.DurationInNights}}-{{'Header.Nights' | translate}}</h3>
+          </div>
+        </ng-template>
+      </ngb-carousel>
+    </div>
+  </div>
+</div>

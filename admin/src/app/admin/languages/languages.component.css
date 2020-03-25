@@ -1,0 +1,448 @@
+@font-face {
+    font-family: Montserratreg;
+    src: url("../../../assets/montserrat/Montserrat-Regular.otf")
+    format("truetype");
+  }
+  @font-face {
+   font-family: Montserrathair;
+   src: url("../../../assets/montserrat/Montserrat-Hairline.otf")
+   format("truetype");
+ }
+ @font-face {
+   font-family: Montserratsemibold;
+   src: url("../../../assets/montserrat/Montserrat-SemiBold.otf")
+   format("truetype");
+ }
+ @font-face {
+   font-family: Montserratultra;
+   src: url("../../../assets/montserrat/Montserrat-UltraLight.otf")
+   format("truetype");
+ }
+ @font-face {
+   font-family: Montserratlight;
+   src: url("../../../assets/montserrat/Montserrat-Light.otf")
+   format("truetype");
+ }
+.input-group-text {
+    color: #000;
+    border: 1px solid #212529;
+    background: #a900ff;;
+    color: white;
+}
+.destination-header {
+    background: linear-gradient(50deg, #af00ff,#ff008d);
+    height:65px;
+  
+}
+.input-box {
+    border: 1px solid black;
+}
+.destination-modal {
+    margin-top:105px;
+    background: #bba6a6;
+    border: 1px solid white;
+}
+.my-table {
+    width:100% !important;
+}
+.destination-head {
+    background:#9427cc;
+    color:white;
+    font-weight:500;
+}
+.destination-body {
+    font-family:Montserratlight;
+}
+
+/* ****  Delete Modal Popup Css Starts ****/
+.delete-head {
+    font-family: Montserratsemi !important;
+    background:linear-gradient(50deg, #af00ff,#ff008d) !important;
+  }
+
+.deletemodal-country{
+    margin-top:161px;;
+  }
+.delete-title{
+    font-family:Montserratreg;
+    margin-left:194px;
+}
+
+/**** Delete Modal PopUp Ends****/
+::placeholder {
+  color: #000;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+ color: #000;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+ color:#000;
+}
+
+/* Add new Button */
+.btn1{
+  color: #cd4dcc;
+  font-family: Montserratsemi;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 13px 25px;
+  border: 1px solid #cd4dcc;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  transition: all 0.5s;
+}
+.btn1:hover{
+  color: #fff;
+  box-shadow: 0 0 20px -5px #000;
+  transform: scale(1.05);
+}
+.btn1:after{
+  content: '';
+  background-color: #cd4dcc;
+  height: 100%;
+  width: 100%;
+  border-radius: 25px;
+  transform: translate(-100%, 0) rotate(10deg);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+.btn1:hover:after{ transform: translate(0) rotate(0); }
+.btn1.red{
+  color: #ff3838;
+  border-color: #ff3838;
+}
+.btn1.red:after{ background: #ff3838; }
+.btn1.red:hover{ color: #fff; }
+.btn1.green{
+  color: #26de81;
+  border-color: #26de81;
+}
+.btn1.green:after{ background: #26de81; }
+.btn1.green:hover{ color: #fff; }
+.btn1.blue{
+  color: #cd4dcc;
+  border-color: #cd4dcc;
+}
+.btn1.blue:after{ background: #1B9CFC; }
+.btn1.blue:hover{ color: #fff; }
+@media only screen and (max-width: 767px){
+  .btn1{ margin-bottom: 20px; }
+}
+
+
+
+
+
+
+
+
+ /* SAVE BUTTON */
+.my-button{
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 0;
+  padding-left: 60px;
+  position: relative;
+  transform: translateZ(0px);
+  transition: all 0.5s ease 0s;
+}
+.my-button:after{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #fff;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: 100% 50% 0;
+  transition: all 0.5s ease-out 0s;
+}
+.my-button:hover:after{
+  transform: scaleX(1);
+  transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+}
+.my-button span{
+  width: 40px;
+  height: 100%;
+  line-height: 40px;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.3s linear 0s;
+}
+.my-button span:after{
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  margin: auto 0;
+  position: absolute;
+  top: 0;
+  right: -6px;
+  bottom: 0;
+  transform: rotate(45deg);
+  transition: all 0.3s linear 0s;
+}
+.my-button.btn-sm{
+  padding-left: 40px;
+}
+.my-button.btn-sm span{
+  width: 27px;
+  line-height: 27px;
+}
+.my-button.btn-sm span:after{
+  width: 8px;
+  height: 8px;
+  right: -5px;
+}
+.my-button.btn-xs{
+  padding-left: 30px;
+}
+.my-button.btn-xs span{
+  width: 20px;
+  line-height: 20px;
+}
+.my-button.btn-xs span:after{
+  width: 7px;
+  height: 7px;
+  right: -4px;
+}
+.my-button.darkblue{
+  border: 1px solid #2112ac;
+  background: #2112ac;
+}
+.my-button.darkblue:hover,
+.btn.darkblue span{
+  color: #2112ac;
+}
+.my-button.darkblue:hover span,
+.my-button.darkblue:hover span:after{
+  background: #2112ac;
+}
+.my-button:hover span{
+  color: #fff;
+}
+@media only screen and (max-width: 767px){
+  .my-button{ margin-bottom: 20px; }
+}
+
+
+
+
+ /* RESET BUTTON */
+.reset-button{
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 0;
+  padding-left: 60px;
+  position: relative;
+  transform: translateZ(0px);
+  transition: all 0.5s ease 0s;
+}
+.reset-button:after{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #fff;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: 100% 50% 0;
+  transition: all 0.5s ease-out 0s;
+}
+.reset-button:hover:after{
+  transform: scaleX(1);
+  transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+}
+.reset-button span{
+  width: 40px;
+  height: 100%;
+  line-height: 40px;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.3s linear 0s;
+}
+.reset-button span:after{
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  margin: auto 0;
+  position: absolute;
+  top: 0;
+  right: -6px;
+  bottom: 0;
+  transform: rotate(45deg);
+  transition: all 0.3s linear 0s;
+}
+.reset-button.btn-sm{
+  padding-left: 40px;
+}
+.reset-button.btn-sm span{
+  width: 27px;
+  line-height: 27px;
+}
+.reset-button.btn-sm span:after{
+  width: 8px;
+  height: 8px;
+  right: -5px;
+}
+.reset-button.btn-xs{
+  padding-left: 30px;
+}
+.reset-button.btn-xs span{
+  width: 20px;
+  line-height: 20px;
+}
+.reset-button.btn-xs span:after{
+  width: 7px;
+  height: 7px;
+  right: -4px;
+}
+.reset-button.blue{
+  border: 1px solid #3297bd;
+  background: #3297bd;
+}
+.reset-button.blue:hover,
+.btn.blue span{
+  color: #3297bd;
+}
+.reset-button.blue:hover span,
+.reset-button.blue:hover span:after{
+  background: #3297bd;
+}
+.reset-button:hover span{
+  color: #fff;
+}
+@media only screen and (max-width: 767px){
+  .reset-button{ margin-bottom: 20px; }
+}
+
+
+
+
+
+
+
+
+
+
+
+ /* CLOSE BUTTON */
+.close-button{
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 0;
+  padding-left: 60px;
+  position: relative;
+  transform: translateZ(0px);
+  transition: all 0.5s ease 0s;
+}
+.close-button:after{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #fff;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: 100% 50% 0;
+  transition: all 0.5s ease-out 0s;
+}
+.close-button:hover:after{
+  transform: scaleX(1);
+  transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+}
+.close-button span{
+  width: 40px;
+  height: 100%;
+  line-height: 40px;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.3s linear 0s;
+}
+.close-button span:after{
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  margin: auto 0;
+  position: absolute;
+  top: 0;
+  right: -6px;
+  bottom: 0;
+  transform: rotate(45deg);
+  transition: all 0.3s linear 0s;
+}
+.close-button.btn-sm{
+  padding-left: 40px;
+}
+.close-button.btn-sm span{
+  width: 27px;
+  line-height: 27px;
+}
+.close-button.btn-sm span:after{
+  width: 8px;
+  height: 8px;
+  right: -5px;
+}
+.close-button.btn-xs{
+  padding-left: 30px;
+}
+.close-button.btn-xs span{
+  width: 20px;
+  line-height: 20px;
+}
+.close-button.btn-xs span:after{
+  width: 7px;
+  height: 7px;
+  right: -4px;
+}
+.close-button.red{
+  border: 1px solid #ff3c7e;
+  background: #ff3c7e;
+}
+.close-button.red:hover,
+.btn.red span{
+  color: #ff3c7e;
+}
+.close-button.red:hover span,
+.close-button.red:hover span:after{
+  background: #ff3c7e;
+}
+.close-button:hover span{
+  color: #fff;
+}
+@media only screen and (max-width: 767px){
+  .close-button{ margin-bottom: 20px; }
+}
+
+.cross-button {
+
+  border-radius: 50%;
+  opacity: 1.0 !important;
+  margin-top:-12px;
+}

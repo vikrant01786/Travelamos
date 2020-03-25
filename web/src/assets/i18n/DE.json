@@ -1,0 +1,73 @@
+{
+    "Header": {
+        "Home": "Zuhause",
+        "Destination": "Ziel",
+        "Tours": "Touren",
+        "Contact Us": "Kontaktiere uns",
+        "Where :": "Wo :",
+        "Find Tours": "Touren suchen",
+        "All Destinations": "Alle Ziele",
+        "Tours & Activities": "Touren & Aktivitäten",
+        "Holidays": "Ferien",
+        "Special Offers": "Sonderangebote",
+        "Days": "Tage",
+        "Nights": "Nächte"
+        
+    },
+    "Footer": {
+        "Tour Agency": "Reisebüro",
+        "Book Now": "buchen Sie jetzt",
+        "Design": "entworfen",
+        "Fashion": "Mode",
+        "Music": "Musik",
+        "Top Deals": "Top Angebote",
+        "Blog posts": "Blogeinträge",
+        "Travel with us this year": "Reisen Sie mit uns in diesem Jahr",
+        "New destinations for you": "Neue Ziele für Sie",
+        "Contact Info": "Kontaktinformation",
+        "Electronic Complex": "Elektronischer Komplex",
+        "All rights reserved": "Alle Rechte vorbehalten",
+        "Copyright": "Urheberrechte ©"
+
+    },
+    "CountriesInDestination": {
+        "DESTINATION IN": "ZIEL IN"
+    },
+    "Destination":{
+        "All Destinations": "Alle Ziele"
+    },
+    "Country": {
+        "SEE ALL THE TRIPS":"SEHEN SIE ALLE AUSFLÜGE",
+        "TRAVELAMOS RECOMMENDS": "TRAVELAMOS EMPFIEHLT",
+        "DISCOVER": "ENTDECKEN",
+        "START": "START",
+        "TRAVELS": "REISEN",
+        "INFO": "DIE INFO"
+    },
+    "countries-in-destinations":{
+        "HOME": "ZUHAUSE",
+        "DESTINATION": "ZIEL",
+        "DESTINATION TITLE IN": "ZIEL TITEL IN"
+    },
+    "tours":{
+        "All Tour Packages": "Alle Tour-Pakete",
+        "TourStaticText": "Sie sind sich immer noch nicht sicher, wohin Sie gehen sollen? Wir gestalten unsere Reise so, dass wir an Sie denken und an die Motivation, die Sie dazu bringen kann, Reisen zu wollen. Damit Sie die gesuchte Reise besser finden können, haben wir diese Kategorien und Arten von Reisen erstellt.",
+        "Where do you want to go ?" : "Wohin willst du gehen",
+        "SEARCH FOR": "SUCHEN NACH",
+        "SORT BY": "SORTIERE NACH",
+        "Lower Price": "Niedrigerer Preis",
+        "Higher Price": "Höherer Preis",
+        "Shorter Duration": "Kürzere Dauer",
+        "Longer Duration": "Längere Dauer",
+        "See Trip": "Siehe Reise",
+        "Price From": "Preis Von",
+        "DAYS": "TAGE"
+    },
+    "Specific_tours":{
+        "ITINERARY": "ROUTE",
+        "SERVICES":"DIENSTLEISTUNGEN",
+        "OUR SERVICES":"UNSERE DIENSTLEISTUNGEN",
+        "Day": "Tag",
+        "Flights are not included. Would you like to book flights?": "Flüge sind nicht inbegriffen. Möchten Sie Flüge buchen?"
+    }
+}

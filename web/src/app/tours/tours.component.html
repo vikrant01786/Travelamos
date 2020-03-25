@@ -1,0 +1,84 @@
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<app-header></app-header>
+<div class="container">
+    <div class="row " style="padding-top: 145px;">
+        <div class="col-12 p-1">
+            <p>{{'tours.TourStaticText'| translate}}</p>
+        </div>
+        <div class="col-12 mb-2">
+            <h4><i class="fa fa-question-circle"></i>{{'tours.Where do you want to go ?'| translate}}</h4>
+        </div>
+    </div>
+    <div class="row py-2 mb-3" style="  background-color:#32004b;border-radius: 10px;">
+        <div class="col-md-6 text-center">
+            <div class="row">
+                <label class="col text-white">{{'tours.SEARCH FOR'| translate}}</label>
+                <select class="col-8" #package (change)="DisplayToursByPackages(package.value);SecondDisplayToursByPackageFunction(package.value)">
+                    <option value="0">{{'tours.All Tour Packages' | translate}}</option>
+                    <option *ngFor="let Packages of PackageData" value="{{Packages.Id}}">{{Packages.PackageName}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6 text-center">
+            <div class="row">
+                <label class="col-4 text-white">{{'tours.SORT BY'| translate}}</label>
+                <select class=" px-3" (change)="Sort($event)">
+                    <option value="">Sorty By</option>
+                    <option value="Low">{{'tours.Lower Price' | translate}}</option>
+                    <option value="High">{{'tours.Higher Price'| translate}}</option>
+                    <option value="Short">{{'tours.Shorter Duration'| translate}}</option>
+                    <option value="Long">{{'tours.Longer Duration' | translate}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="SortedData == ''">
+        <div class="col-md-12 text-center">
+            <h6 class="text-danger">{{Message}}</h6>
+        </div>
+    </div>
+ 
+    <div  class="row mt-5" *ngFor="let Destination of  SortedData | groupBy: 'DestinationName'">
+        <div class="col-12">
+            <h2><i class="fa fa-map-marker pr-3" ></i>{{Destination.key}}</h2><hr>
+            <div class="row">
+                <div class="col-md-4" *ngFor="let Destn of Destination.value">
+                    <div class="card shadow-lg" style="width: 100%">
+                        <img *ngIf="Destn.TourImages != null" src="{{this.env.apiUrl}}{{Destn.TourImages}}" class="card-img-top" alt="...">
+                        <img *ngIf="Destn.TourImages == null" src="{{this.env.apiUrl}}no-logo/no-image.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{Destn.TourTitle}}</h5>
+                            <h6 class="fonts">{{Destn.TourLocation}}</h6>
+                            <div class="row mt-4">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col p-0 line text-center font-12">
+                                            <b>{{Destn.DurationInDays}}<br> {{'tours.DAYS' | translate}}</b>
+                                        </div>
+                                        <div class="col p-0 font-12 text-center">
+                                            <b>€{{Destn.PriceIndividual== null? '-': Destn.PriceIndividual}}<br>
+                                            {{'tours.Price From' | translate}}</b>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col text-right "> 
+                                           
+                                           <a href="javascript:void(0)" [routerLink]="['/specific-tour'+ '/' +Destn.TourLocationID]"><button type="button" (click)="f(Destn)"   class="btn btn-dangers">{{'tours.See Trip' | translate}} <i class="fa fa-chevron-circle-right"></i></button></a> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><br>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    
+</div>
+<br>
+<br>
+<app-footer></app-footer>

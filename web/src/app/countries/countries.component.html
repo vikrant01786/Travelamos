@@ -1,0 +1,412 @@
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<app-header></app-header>
+<!-----------=========================baneer-start-=======================================-->
+<section class="banner" [style.background-image]="'url(' + (img) + ')'">
+    <div class="black-strip menu-1 py-1">
+        <div class="container">
+            <div class="row mx-0">
+                <div class="col-12 col-lg-4 b-1">
+                    <h3 style="text-transform:uppercase;font-family: bebas;">DISCOVER &nbsp; {{CountryNameTitle}}</h3></div>
+                <div class="col-12 col-lg-8 b-2">
+                    <ul class="nav nav-pills " id="pills-tab" role="tablist">
+                        <li class="nav-item text-center">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                                <h6 class="f2"> ATTRACTION</h6>
+                                <i class="fa fa-university"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item text-center ">
+                            <a class="nav-link" id="pills-cities-tab" data-toggle="pill" href="#pills-cities" role="tab" aria-controls="pills-cities" aria-selected="false">
+                                <h6 class="f2">CITIES</h6>
+                                <i class="fa fa-globe"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item text-center">
+                            <a class="nav-link" id="pills-hotels-tab" data-toggle="pill" href="#pills-hotels" role="tab" aria-controls="pills-hotels" aria-selected="false">
+                                <h6 class="f2">HOTELS</h6>
+                                <i class="fa fa-hotel"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item text-center">
+                            <a class="nav-link" data-toggle="pill" routerLink="/tours" (click)="storeCountryDataFromSessionStorageToLocalStorage()" role="tab" aria-controls="pills-contact" aria-selected="false">
+                                <h6 class="f2">All TRIPS</h6>
+                                <i class="fa fa-plane"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-----------=========================baneer-end-=======================================-->
+<div class="container">
+    <div class="row mt-5 ">
+        <div class="col-12">
+            <p class="h4">
+                {{CountryDescription | titlecase}}
+            </p>
+        </div>
+    </div>
+</div>
+<section class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-4" *ngFor="let Country of CountryData">
+                    <div class="card px-3 shadow-lg" [style.background]="'url('+this.env.apiUrl+Country.AttractionImage+')'" style="background-size: cover;padding-top: 200px;">
+                        <span class="px-2" style="background-color: rgba(0, 0, 0, .6);color: #fff;font-size: 30px;font-weight: 700;">{{Country.AttractionTitle}}</span>
+                        <p class="lead px-2" style="background-color: rgba(0, 0, 0, .6);color: #fff;height: 250px;">{{Country.AttractionDescription}}</p>
+                        <button class="more more-lead "><i class="fa fa-plus fa-plus-1"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="tab-pane fade mt-5" id="pills-cities" role="tabpanel" aria-labelledby="pills-cities-tab">
+      <div class="container">
+
+          
+                  <div class="row"  [ngClass]="{'dashboard-cards': show, 'd-card-show': show, 'row': !show}">
+                      <div class=' col-md-4' [ngClass]="{'card':show,'cardnotshow':!show}" *ngFor="let City of CityData" >  
+                          <img class="card-img-top" src="{{this.env.apiUrl}}{{City.CityImages}}" alt="Card image cap">
+                        <div class='card-title'>
+                          <h5 class="my-card"><b>{{City.CityName}}</b></h5>
+                          <p class="card-text Description">{{City.HomeDescription}}</p>
+                          <a href="javascript:void(0)" (click)="ExpandCity(City);"class="btn btn-primary">{{selectedButtonCity[City.Id]== true? 'Close' : 'Read more'}}</a>
+                        
+                         
+
+                        </div>
+                        <div  [ngClass]="{'card-flap': show && this.id === City.Id, 'flap1': show && this.id === City.Id}"  *ngIf="show && this.id === City.Id">
+                          <div [ngClass]="{'card-description': show && this.id === City.Id}">
+                            <ul  [ngClass]="{'task-list': show && this.id === City.Id}" >
+                              <li>
+                                  <span>Description:</span>
+                                 {{City.HomeDescription}}
+                                
+                              </li>
+                              <li>
+                                  <span> City Home Title:</span>
+                              {{City.HomeTitle}}
+                               
+                              </li>
+                            </ul>
+                          </div>
+                          <div [ngClass]="{'flap2': !show && this.id !== City.Id}">
+                            <div  [ngClass]="{'card-actions': show}" >
+                              <a class='btn' href='javascript:void(0)'(click)="ExpandCity(City)">Close</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
+                    
+                    </div>
+      </div>
+  </div>
+
+    
+    <!-- <div class="tab-pane fade" id="pills-cities" role="tabpanel" aria-labelledby="pills-cities-tab">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-4">
+                    <div class="card" style="width: 100%;">
+                        <img class="card-img-top" src="assets/images/cheeta.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card" style="width: 100%;">
+                        <img class="card-img-top" src="assets/images/cheeta.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card" style="width: 100%;">
+                        <img class="card-img-top" src="assets/images/cheeta.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- hotel starts -->
+        <div class="tab-pane fade mt-5" id="pills-hotels" role="tabpanel" aria-labelledby="pills-hotels-tab">
+        <div class="container">
+
+            
+                    <div class="row"  [ngClass]="{'dashboard-cards': show, 'd-card-show': show, 'row': !show}">
+                        <div class=' col-md-4' [ngClass]="{'card':show,'cardnotshow':!show}" *ngFor="let Hotel of HotelData" >  
+                            <img class="card-img-top" src="{{this.env.apiUrl}}{{Hotel.HotelImages}}" alt="Card image cap">
+                          <div class='card-title'>
+                            <h5 class="my-card"><b>{{Hotel.HotelName}}</b></h5>
+                            <p class="card-text">{{Hotel.HomeDescription}}</p>
+                            <a href="javascript:void(0)" (click)="Expand(Hotel);"class="btn btn-primary">{{selectedButton[Hotel.Id]== true? 'Close' : 'Read more'}}</a>
+                          
+                           
+
+                          </div>
+                          <div  [ngClass]="{'card-flap': show && this.id === Hotel.Id, 'flap1': show && this.id === Hotel.Id}"  *ngIf="show && this.id === Hotel.Id">
+                            <div [ngClass]="{'card-description': show && this.id === Hotel.Id}">
+                              <ul  [ngClass]="{'task-list': show && this.id === Hotel.Id}" >
+                                <li>
+                                    <span>Description:</span>
+                                   {{Hotel.HomeDescription}}
+                                  
+                                </li>
+                                <li>
+                                    <span> Website:</span>
+                                {{Hotel.WebsiteUrl}}
+                                 
+                                </li>
+                                <li>
+                                    <span>Address: </span>
+                                  {{Hotel.Address}}
+                                  
+                                </li>
+                                <li>
+                                    <span>Contact No:</span>
+                                  {{Hotel.TelephoneNumber}}
+                                  
+                                </li>
+                              </ul>
+                            </div>
+                            <div [ngClass]="{'flap2': !show && this.id !== Hotel.Id}">
+                              <div  [ngClass]="{'card-actions': show}" >
+                                <a class='btn' href='javascript:void(0)'(click)="Expand(Hotel)">Close</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                         <!-- <div class='card col-md-4 '>  
+                            <img class="card-img-top" src="assets/images/cheeta.jpg" alt="Card image cap">
+                          <div class='card-title'>
+                            <h5 class="card-title my-card"><b>Aqua Hotel</b></h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Read More Info</a>
+                          </div>
+                          <div class='card-flap flap1'>
+                            <div class='card-description'>
+                              <ul class='task-list'>
+                                <li>
+                                   
+                                    Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.
+                                 
+                                </li>
+                                <li>
+                                 Website: https//Trivago.Com
+                                 
+                                </li>
+                                <li>
+                                  Address:  Electronic Complex,Near Pardeshipura,Indore
+                                 
+                                </li>
+                                <li>
+                                  Contact No: +917847838577
+                                
+                                </li>
+                              </ul>
+                            </div>
+                            <div class='card-flap flap2'>
+                              <div class='card-actions'>
+                                <a class='btn' href='#'>Close</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>  -->
+
+                         <!-- <div class='card col-md-4 '>  
+                            <img class="card-img-top" src="assets/images/cheeta.jpg" alt="Card image cap">
+                          <div class='card-title'>
+                            <h5 class="card-title my-card"><b>Aqua Hotel</b></h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Read More Info</a>
+                        
+                          </div>
+                          <div class='card-flap flap1'>
+                            <div class='card-description'>
+                              <ul class='task-list'>
+                                <li>
+                                
+                                    Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.
+                                 
+                                </li>
+                                <li>
+                                 Website: https//Trivago.Com
+                                 
+                                </li>
+                                <li>
+                                  Address:  Electronic Complex,Near Pardeshipura,Indore
+                               
+                                </li>
+                                <li>
+                                  Contact No: +917847838577
+                                 
+                                </li>
+                              </ul>
+                            </div>
+                            <div class='card-flap flap2'>
+                              <div class='card-actions'>
+                                <a class='btn' href='#'>Close</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>  -->
+
+                      
+                      </div>
+
+
+
+
+
+<!-- 
+                      <div class='row dashboard-cards  mt-5'>
+                        <div class='card   col-md-4 '>  
+                            <img class="card-img-top" src="assets/images/cheeta.jpg" alt="Card image cap">
+                          <div class='card-title'>
+                            <h5 class="my-card"><b>Aqua Hotel</b></h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Read More Info</a>
+
+                          </div>
+                          <div class='card-flap flap1'>
+                            <div class='card-description'>
+                              <ul class='task-list'>
+                                <li>
+                                    <span>Description:</span>
+                                    Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.
+                                  
+                                </li>
+                                <li>
+                                    <span> Website:</span>
+                                 https//Trivago.Com
+                                 
+                                </li>
+                                <li>
+                                    <span>Address: </span>
+                                  Electronic Complex,Near Pardeshipura,Indore
+                                  
+                                </li>
+                                <li>
+                                    <span>Contact No:</span>
+                                  +917847838577
+                                  
+                                </li>
+                              </ul>
+                            </div>
+                            <div class='card-flap flap2'>
+                              <div class='card-actions'>
+                                <a class='btn' href='#'>Close</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div><br><br>
+
+
+                        <div class='card col-md-4 '>  
+                            <img class="card-img-top" src="assets/images/cheeta.jpg" alt="Card image cap">
+                          <div class='card-title'>
+                            <h5 class="card-title my-card"><b>Aqua Hotel</b></h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Read More Info</a>
+                          </div>
+                          <div class='card-flap flap1'>
+                            <div class='card-description'>
+                              <ul class='task-list'>
+                                <li>
+                                   
+                                    Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.
+                                 
+                                </li>
+                                <li>
+                                 Website: https//Trivago.Com
+                                 
+                                </li>
+                                <li>
+                                  Address:  Electronic Complex,Near Pardeshipura,Indore
+                                 
+                                </li>
+                                <li>
+                                  Contact No: +917847838577
+                                
+                                </li>
+                              </ul>
+                            </div>
+                            <div class='card-flap flap2'>
+                              <div class='card-actions'>
+                                <a class='btn' href='#'>Close</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class='card col-md-4 '>  
+                            <img class="card-img-top" src="assets/images/cheeta.jpg" alt="Card image cap">
+                          <div class='card-title'>
+                            <h5 class="card-title my-card"><b>Aqua Hotel</b></h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Read More Info</a>
+                        
+                          </div>
+                          <div class='card-flap flap1'>
+                            <div class='card-description'>
+                              <ul class='task-list'>
+                                <li>
+                                
+                                    Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.
+                                 
+                                </li>
+                                <li>
+                                 Website: https//Trivago.Com
+                                 
+                                </li>
+                                <li>
+                                  Address:  Electronic Complex,Near Pardeshipura,Indore
+                               
+                                </li>
+                                <li>
+                                  Contact No: +917847838577
+                                 
+                                </li>
+                              </ul>
+                            </div>
+                            <div class='card-flap flap2'>
+                              <div class='card-actions'>
+                                <a class='btn' href='#'>Close</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      
+                      </div> -->
+        </div>
+    </div>
+    <!-- hotel ends -->
+</section>
+<br>
+<br>
+<!-- FOOTER START -->
+<app-footer></app-footer>
+<!-- FOOTER ENDS -->

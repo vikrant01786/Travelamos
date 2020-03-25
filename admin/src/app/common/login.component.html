@@ -1,0 +1,115 @@
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->
+<!-- <ngx-spinner bdColor="#af00ff" size="large" color="#fff" type="line-scale-pulse-out">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="limiter">
+  <div class="container-login100">
+      <div class="wrap-login100">
+          <div class="login100-form-title" style="background-image: url(assets/images/admin.jpg);">
+              <span class="login100-form-title-1">
+                  Admin Pannel
+              </span>
+          </div>
+          <form class="login100-form validate-form" #loginform="ngForm" (ngSubmit)="validateUser();">
+              <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                  <span class="label-input100">Username</span>
+                  <input class="input100" type="text" name="UserName" #name="ngModel" autocomplete="off" [(ngModel)]="loginData.UserName" placeholder="Enter username">
+                  <span class="focus-input100"></span>
+              </div>
+              <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                  <span class="label-input100">Password</span>
+                  <input class="input100" type="password" name="Password" #pass="ngModel" [(ngModel)]="loginData.Password" placeholder="Enter password">
+                  <span class="focus-input100"></span>
+              </div>
+              <div class="flex-sb-m w-full p-b-30">
+                  <div class="contact100-form-checkbox">
+                      <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                      <label class="label-checkbox100" for="ckb1">
+                          Remember me
+                      </label>
+                  </div>
+                  <div>
+                      <a href="#" class="txt1">
+                         Forgot Password?
+                      </a>
+                  </div>
+              </div>
+              <div class="container-login100-form-btn mt-1">
+                  <button class=" btn btn-lg">
+                      <span>Login</span>
+                  </button>
+                 
+              </div>
+          </form>
+      </div>
+  </div>
+</div> -->
+<!-- 
+|________________________________________________
+| © 2019 Selectical Pvt.Ltd All Rights Reserved |
+| @ Designed & Developed By Vikrant Rana        |
+|_______________________________________________|  
+-->
+
+
+
+<ngx-spinner bdColor="#ae0754" size="large" color="#fff" type="line-scale-pulse-out">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
+
+<div class="login-page" style="background-image: url('../../assets/images/background6.jpg');">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 m-auto col-sm-8 col-12">
+                <div class="log-box">
+                    <div class="row">
+                        <div class="col-xl-6 col-sm-6 col-12 pr-0 my_pd">
+                            <!-- <div class="logo-back-img">
+                                    <img src="assets/images/logo/logo_white.svg" >
+                                
+                            </div> -->
+                          <div class="login_text">
+                              <h1>Admin Panel</h1>
+                              <p>Login with your Travelamos account</p>
+                          </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6 col-12 pl-0">
+                            <div class="log-content">
+                               
+                                <div class="log-body">
+                                    <form  #loginform="ngForm" (ngSubmit)="validateUser();">
+                    
+                                      <div class="wrap-input2 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+                                        <input class="input2" type="text" name="UserName" #name="ngModel" autocomplete="off" [(ngModel)]="loginData.UserName">
+                                        <span class="focus-input2" data-placeholder="User Name"></span>
+                                      </div>
+                                
+                                      <div class="wrap-input2 validate-input" data-validate = "Phone is required">
+                                        <input class="input2" type="password"  name="Password" #pass="ngModel" [(ngModel)]="loginData.Password" autocomplete="flase">
+                                        <span class="focus-input2" data-placeholder="Password"></span>
+                                      </div>
+
+                                      <!-- <a href="#">Forgot your password?</a> -->
+                                <div class="log-btn text-center">
+                                    <button  class="btn my_btn_two mt-5">LOGIN</button> 
+                                </div>
+                                <!-- <div class="log-bottom-cotent"> -->
+                                <!-- <p>Not registered?<a routerLink="/signup">Create a new account</a> -->
+                                <!-- <a href="forgotpassword.html" class="pull-right">Forgot Password</a> -->
+                                <!-- </p> -->
+                                <!-- </div> -->
+                            </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

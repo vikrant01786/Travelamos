@@ -1,0 +1,16 @@
+.p-1{
+    font-size: 18px;
+    color: gray;
+    font-weight: 600;
+}
+
+h4{color: grey;}
+select{padding: 6px 10px;border-radius: 7px;border: 2px solid #888686;outline: none !important;}
+input{border: 2px solid #888686;border-radius: 7px;outline: none !important;}
+label{color: grey;font-weight: 700;padding-top: 6px;}
+.line{border-right: 2px solid red;}
+.font-12{font-size: 14px;color: red;}
+.fonts{font-size: 12px;color: gray;}
+.btn-dangers{background-color: red;color: #fff !important;}
+hr{border: 1px solid gray;margin-top: 2px;}
+h2{color: gray;}
