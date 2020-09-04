@@ -63,7 +63,7 @@
     "ngx-perfect-scrollbar": "^5.3.5",
     "ngx-spinner": "^7.2.0",
     "ngx-toastr": "^9.1.1",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "nouislider": "^10.1.0",
     "nvd3": "^1.8.6",
     "pace-js": "^1.0.2",
